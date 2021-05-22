@@ -37,8 +37,8 @@
                 </div>
             </div>
         </div>
-        <template v-for="hymn in hymns">
-            <h3 class="text-danger text-center pt-5" :id="hymn.name">{{hymn.name}}</h3>
+        <div v-for="hymn in hymns" :class="`${displayedLanguages()!==0?'':'d-none'}`">
+            <h3 :class="`text-danger text-center pt-5 `" :id="hymn.name">{{hymn.name}}</h3>
             <div v-for="verse in hymn.english.length" class="container">
                 <div :class="`row my-3 ${verse%2===0?'text-primary':''}`">
                     <div :class="`col-${12/displayedLanguages()} ${langs.english?'':'d-none'}`">
@@ -51,10 +51,10 @@
                     </div>
 
                 </div>
-        </template>
-    </div>
+            </div>
+        </div>
 
-    <!-- <template v-for="verse in lang"
+        <!-- <template v-for="verse in lang"
             <div class="row">
                 <div class="col-6"></div>
                 <div class="col-6"></div>
