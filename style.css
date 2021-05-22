@@ -1,0 +1,12 @@
+.arabic{
+    direction: rtl;
+}
+.inline-block{
+    display: inline-block;
+}
+.text-right{
+    text-align: right;
+}
+.cursor-pointer{
+    cursor: pointer;
+}

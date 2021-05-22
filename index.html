@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Psalmody</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- <h1>{{first_name}} {{last_name}}</h1>
+        <img :src="`./imgs/${first_name}.jpg`" :alt="`${first_name} ${last_name}`" width="400"> -->
+        <div class="sticky-top container">
+            <p class="text-right bg-light m-0 cursor-pointer" @click="toggle('menu',showMenu)">
+                {{showMenu?'Hide Menu':'Show Menu'}}
+            </p>
+            <div :class="`${showMenu?'':'d-none'}`">
+                <div class="d-flex justify-content-around pt-2  bg-light">
+                    <p> <input type="checkbox" value="english" class="mx-2" :checked="langs.english"
+                            @click="toggle('lang','english')">English</p>
+                    <p><input type="checkbox" value="copticEnglish" class="mx-2" :checked="langs.copticEnglish"
+                            @click="toggle('lang','copticEnglish')">Coptic English
+                    </p>
+
+                    <p><input type="checkbox" value="arabic" class="mx-2" :checked="langs.arabic"
+                            @click="toggle('lang','arabic')">Arabic </p>
+                </div>
+                <div class="d-flex justify-content-center pt-2  bg-light">
+                    <div v-for="hymn in hymns" class="mx-2 mb-1">
+                        <a :href="`#${hymn.name}`">{{hymn.name}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <template v-for="hymn in hymns">
+            <h3 class="text-danger text-center pt-5" :id="hymn.name">{{hymn.name}}</h3>
+            <div v-for="verse in hymn.english.length" class="container">
+                <div :class="`row my-3 ${verse%2===0?'text-primary':''}`">
+                    <div :class="`col-${12/displayedLanguages()} ${langs.english?'':'d-none'}`">
+                        {{hymn.english[verse-1]}}
+                    </div>
+                    <div :class="`col-${12/displayedLanguages()} ${langs.copticEnglish?'':'d-none'}`">
+                        {{hymn.copticEnglish[verse-1]}}</div>
+                    <div :class="`col-${12/displayedLanguages()} arabic  ${langs.arabic?'':'d-none'}`">
+                        {{hymn.arabic[verse]}}
+                    </div>
+
+                </div>
+        </template>
+    </div>
+
+    <!-- <template v-for="verse in lang"
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6"></div>
+            </div> -->
+
+    </div>
+    <!-- <div id="app2">
+        <h1>{{first_name}} {{last_name}}</h1>
+        <button @click="clickme">
+            <span v-if="!toggler_1">Tony</span>
+            <span v-else>Lydia</span>
+        </button>
+        <p v-show="toggler_1">Tony is now appearing h1</p>
+    </div> -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="./app.js" type="module"></script>
+</body>
+
+</html>
