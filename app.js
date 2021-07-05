@@ -7,7 +7,7 @@ const app = {
             toggler_1: true,
             hymns,
             langs: ["english", "copticEnglish", "arabic"],
-            showMenu: true
+            showMenu: false
         }
 
     },
