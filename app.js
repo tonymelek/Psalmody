@@ -7,7 +7,8 @@ const app = {
             toggler_1: true,
             hymns,
             langs: ["english", "copticEnglish", "arabic"],
-            showMenu: false
+            showMenu: false,
+            selectedHymns: hymns
         }
 
     },
@@ -32,6 +33,19 @@ const app = {
         },
         showLang(lang) {
             return this.langs.indexOf(lang) !== -1
+        },
+        toggleHymn(name) {
+            console.log(name);
+            const hymn = this.selectedHymns.find(hymn => hymn.name === name)
+            const index = this.hymns.findIndex(hymn => hymn.name === name)
+            console.log(index);
+            if (hymn) {
+                this.selectedHymns = this.selectedHymns.filter(hymn => hymn.name !== name)
+            } else {
+                const hymnToAdd = this.hymns.find(hymn => hymn.name === name)
+                this.selectedHymns.splice(index, 0, hymnToAdd);
+            }
+
         }
     }
 

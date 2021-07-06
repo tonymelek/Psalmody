@@ -16,7 +16,7 @@
 <body>
     <div id="app">
         <div class="container">
-            <div class="fixed-top">
+            <div class=" container fixed-top">
                 <div class=" bg-light m-0 cursor-pointer" @click="toggle('menu',showMenu)">
                     <!-- <span v-if="showMenu">Hide Menu</span>
                 <span v-else>Show Menu</span> -->
@@ -54,12 +54,20 @@
                     </div>
                     <div class="d-flex flex-column  pt-2  bg-light animate__animated animate__fadeInLeft menu_width">
                         <div v-for="hymn in hymns" class="mx-2 mb-1">
-                            <a :href="`#${hymn.name}`" @click="toggle('menu')">{{hymn.name}}</a>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a :href="`#${hymn.name}`" @click="toggle('menu')">{{hymn.name}}</a>
+                                <label class="switch">
+                                    <input type="checkbox" value="hymn.name" class="mx-2" checked
+                                        @click="toggleHymn(hymn.name)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <hr class="my-1">
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-for="hymn in hymns" :class="{'d-none':langsCount===0}">
+            <div v-for="hymn in selectedHymns" :class="{'d-none':langsCount===0}">
                 <h3 class="text-danger text-center pt-5" :id="hymn.name">{{hymn.name}}</h3>
                 <div v-for="verse in hymn.english.length" class="container">
                     <div class="row my-3" :class="{'text-primary':verse%2===0}">
