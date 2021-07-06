@@ -8,10 +8,7 @@
     <title>Psalmody</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-      />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -20,68 +17,68 @@
     <div id="app">
         <div class="container">
             <div class="fixed-top">
-            <div class=" bg-light m-0 cursor-pointer" @click="toggle('menu',showMenu)">
-                <!-- <span v-if="showMenu">Hide Menu</span>
+                <div class=" bg-light m-0 cursor-pointer" @click="toggle('menu',showMenu)">
+                    <!-- <span v-if="showMenu">Hide Menu</span>
                 <span v-else>Show Menu</span> -->
-<img src="./imgs/menu.png" alt="menu" width="40">
+                    <img src="./imgs/menu.png" alt="menu" width="40">
                 </div>
-       
-            <div v-show="showMenu">
-                <div class="d-flex justify-content-around pt-2  bg-light animate__animated animate__fadeInDown">
-                    <div class="d-flex align-items-center ">
-                        
-                         <label class="switch">
-                            <input type="checkbox" value="english" class="mx-2" v-model="langs">
-                            <span class="slider round"></span>
-                        </label>
-                        <div class="mx-2">English</div>
+
+                <div v-show="showMenu">
+                    <div class="d-flex justify-content-around pt-2  bg-light animate__animated animate__fadeInDown">
+                        <div class="d-flex align-items-center ">
+
+                            <label class="switch">
+                                <input type="checkbox" value="english" class="mx-2" v-model="langs">
+                                <span class="slider round"></span>
+                            </label>
+                            <div class="mx-2">English</div>
                         </div>
                         <div class="d-flex align-items-center">
-                        
+
                             <label class="switch">
-                               <input type="checkbox" value="copticEnglish" class="mx-2" v-model="langs">
-                               <span class="slider round"></span>
-                           </label>
-                           <div class="mx-2">Coptic English</div>
-                           </div>
-                   
-                           <div class="d-flex align-items-center">
-                        
+                                <input type="checkbox" value="copticEnglish" class="mx-2" v-model="langs">
+                                <span class="slider round"></span>
+                            </label>
+                            <div class="mx-2">Coptic English</div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+
                             <label class="switch">
-                               <input type="checkbox" value="arabic" class="mx-2" v-model="langs">
-                               <span class="slider round"></span>
-                           </label>
-                           <div class="mx-2">Arabic</div>
-                           </div>
-                    
+                                <input type="checkbox" value="arabic" class="mx-2" v-model="langs">
+                                <span class="slider round"></span>
+                            </label>
+                            <div class="mx-2">Arabic</div>
+                        </div>
+
+                    </div>
+                    <div class="d-flex flex-column  pt-2  bg-light animate__animated animate__fadeInLeft menu_width">
+                        <div v-for="hymn in hymns" class="mx-2 mb-1">
+                            <a :href="`#${hymn.name}`" @click="toggle('menu')">{{hymn.name}}</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex flex-column  pt-2  bg-light animate__animated animate__fadeInLeft menu_width">
-                    <div v-for="hymn in hymns" class="mx-2 mb-1">
-                        <a :href="`#${hymn.name}`" @click="toggle('menu')">{{hymn.name}}</a>
+            </div>
+            <div v-for="hymn in hymns" :class="{'d-none':langsCount===0}">
+                <h3 class="text-danger text-center pt-5" :id="hymn.name">{{hymn.name}}</h3>
+                <div v-for="verse in hymn.english.length" class="container">
+                    <div class="row my-3" :class="{'text-primary':verse%2===0}">
+                        <div :class="colsCount" v-show="showLang('english')">
+                            {{hymn.english[verse-1]}}
+                        </div>
+                        <div :class="colsCount" v-show="showLang('copticEnglish')">
+                            {{hymn.copticEnglish[verse-1]}}</div>
+                        <div class="arabic" :class="colsCount" v-show="showLang('arabic')">
+                            {{hymn.arabic[verse]}}
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
-        <div v-for="hymn in hymns" :class="{'d-none':langsCount===0}">
-            <h3 class="text-danger text-center pt-5" :id="hymn.name">{{hymn.name}}</h3>
-            <div v-for="verse in hymn.english.length" class="container">
-                <div class="row my-3" :class="{'text-primary':verse%2===0}">
-                    <div :class="colsCount" v-show="showLang('english')">
-                        {{hymn.english[verse-1]}}
-                    </div>
-                    <div :class="colsCount" v-show="showLang('copticEnglish')">
-                        {{hymn.copticEnglish[verse-1]}}</div>
-                    <div class="arabic" :class="colsCount" v-show="showLang('arabic')">
-                        {{hymn.arabic[verse]}}
-                    </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="./vue.js"></script>
-    <script src="./app.js" type="module"></script>
+        <script src="./vue.js"></script>
+        <script src="./app.js" type="module"></script>
 </body>
 
 </html>
