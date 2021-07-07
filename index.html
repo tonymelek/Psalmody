@@ -53,11 +53,17 @@
 
                     </div>
                     <div class="d-flex flex-column  pt-2  bg-light animate__animated animate__fadeInLeft menu_width">
+                        <div v-if="selectAll">
+                            <button class="btn btn-primary mb-3" @click="select('all')">Select All</button>
+                        </div>
+                        <div v-else>
+                            <button class="btn btn-warning mb-3" @click="select('none')">Select None</button>
+                        </div>
                         <div v-for="hymn in hymns" class="mx-2 mb-1">
                             <div class="d-flex justify-content-between align-items-center">
                                 <a :href="`#${hymn.name}`" @click="toggle('menu')">{{hymn.name}}</a>
                                 <label class="switch">
-                                    <input type="checkbox" value="hymn.name" class="mx-2" checked
+                                    <input type="checkbox" value="hymn.name" class="mx-2" :checked="checked(hymn.name)"
                                         @click="toggleHymn(hymn.name)">
                                     <span class="slider round"></span>
                                 </label>

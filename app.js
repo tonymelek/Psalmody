@@ -18,6 +18,9 @@ const app = {
         },
         colsCount() {
             return `col-${12 / this.langsCount}`
+        },
+        selectAll() {
+            return this.selectedHymns.length === 0
         }
     },
     methods: {
@@ -34,6 +37,23 @@ const app = {
         showLang(lang) {
             return this.langs.indexOf(lang) !== -1
         },
+        select(type) {
+            switch (type) {
+                case 'all':
+                    this.selectedHymns = this.hymns
+                    break;
+                case 'none':
+                    this.selectedHymns = []
+                    break;
+
+                default:
+                    break;
+            }
+        },
+        checked(hymnName) {
+            return this.selectedHymns.find(hymn => hymn.name === hymnName) ? true : false
+        }
+        ,
         toggleHymn(name) {
             console.log(name);
             const hymn = this.selectedHymns.find(hymn => hymn.name === name)
