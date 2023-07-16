@@ -12,7 +12,13 @@ import  whoAmongGods from './who_among_gods.js'
 import amenKerialaison from './amenKerialaison.js'
 import fourth_hoos from './fourth_hoos.js'
 import aynahti from './aynahti.js'
-import aykoti from './aykoti.js'
+import aykoti from './aykoti.js';
+import theotokia from './theotokia.js';
+import theotokia_intro from './theotokia_intro.js';
+import theotokia_tenth_to_fifteenth from './theotokia_tenth_to_fifteenth.js'
+import shere_ne_maria from './shere_ne_maria.js';
+import semoti from './semoti.js';
+import seven_times from './seven_times.js'
 
 export default 
 [ten_thino,
@@ -27,6 +33,12 @@ export default
         fourth_hoos,
         aynahti,
         aykoti,
+        theotokia_intro,
+        theotokia,
+        shere_ne_maria,
+        semoti,
+        seven_times,
+        theotokia_tenth_to_fifteenth,
         whoAmongGods,
         amenKerialaison
     ]
