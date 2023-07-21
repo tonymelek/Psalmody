@@ -1,11 +1,18 @@
 <template>
     <div class="container">
         <div class=" container fixed-top">
-            <div class=" bg-light m-0 cursor-pointer" @click="toggle('menu', showMenu)">
-                <!-- <span v-if="showMenu">Hide Menu</span>
+            <div class="d-flex justify-content-between">
+                <div class=" bg-light m-0 cursor-pointer" @click="toggle('menu', showMenu)">
+                    <!-- <span v-if="showMenu">Hide Menu</span>
                 <span v-else>Show Menu</span> -->
-                <img src="../assets/imgs/menu.png" alt="menu" width="40">
+                    <img src="../assets/imgs/menu.png" alt="menu" width="40">
+                </div>
+                <div class="d-flex  align-items-center">
+                    <p @click="changeFontSize(-.25)" class="cursor-pointer">A</p>
+                    <p class="mx-2 bigger cursor-pointer" @click="changeFontSize(.25)">A</p>
+                </div>
             </div>
+
 
             <div v-show="showMenu">
                 <div class="d-flex justify-content-around pt-2  bg-light animate__animated animate__fadeInDown">
@@ -61,12 +68,13 @@
             <h3 class="text-danger text-center pt-5" :id="hymn.name">{{ hymn.name }}</h3>
             <div v-for="verse in hymn.english.length" class="container">
                 <div class="row my-3" :class="{ 'text-primary': verse % 2 === 0 }">
-                    <div :class="colsCount" v-show="showLang('english')">
+                    <div :class="colsCount" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('english')">
                         {{ hymn.english[verse - 1] }}
                     </div>
-                    <div :class="colsCount" v-show="showLang('copticEnglish')">
+                    <div :class="colsCount" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('copticEnglish')">
                         {{ hymn.copticEnglish[verse - 1] }}</div>
-                    <div class="arabic" :class="colsCount" v-show="showLang('arabic')">
+                    <div class="arabic" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
+                        v-show="showLang('arabic')">
                         {{ hymn.arabic[verse] }}
                     </div>
 
@@ -86,9 +94,13 @@ export default {
         hymns,
         langs: ["english", "copticEnglish", "arabic"],
         showMenu: false,
-        selectedHymns: hymns
+        selectedHymns: hymns,
+        fontSize: 1
     }),
     methods: {
+        changeFontSize(step){
+            this.fontSize+=step
+        },
         toggle(type, value) {
             switch (type) {
                 case 'menu':
@@ -145,9 +157,17 @@ export default {
         },
         selectAll() {
             return this.selectedHymns.length === 0
+        },
+        fontSizeWithRem() {
+            return `${this.fontSize}rem`
         }
     }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.bigger{
+    font-weight: bolder;
+    font-size: 2rem;
+}
+</style>
