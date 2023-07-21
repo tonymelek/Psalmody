@@ -1,15 +1,15 @@
 <template>
     <div class="container">
         <div class=" container fixed-top">
-            <div class="d-flex justify-content-between">
-                <div class=" bg-light m-0 cursor-pointer" @click="toggle('menu', showMenu)">
+            <div class="d-flex justify-content-between bg-light">
+                <div class="m-0 cursor-pointer" @click="toggle('menu', showMenu)">
                     <!-- <span v-if="showMenu">Hide Menu</span>
                 <span v-else>Show Menu</span> -->
                     <img src="../assets/imgs/menu.png" alt="menu" width="40">
                 </div>
                 <div class="d-flex  align-items-center">
-                    <p @click="changeFontSize(-.25)" class="cursor-pointer">A</p>
-                    <p class="mx-2 bigger cursor-pointer" @click="changeFontSize(.25)">A</p>
+                    <p @click="changeFontSize(-.25)" class="cursor-pointer my-0 font-border">A</p>
+                    <p class="mx-2 my-0 bigger cursor-pointer font-border" @click="changeFontSize(.25)">A</p>
                 </div>
             </div>
 
@@ -169,5 +169,11 @@ export default {
 .bigger{
     font-weight: bolder;
     font-size: 2rem;
+}
+.font-border{
+    border: 1px solid black;
+    border-radius: 2px;
+    line-height: 2rem;
+    padding: 0 .5rem;
 }
 </style>
