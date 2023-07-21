@@ -15,28 +15,26 @@ const parser = new DomParser();
 app.get('/api/psalmody', (req, res) => {
     // Lang ='english' or 'arabic' or 'coptic'
     let { lang, item } = req.query
-    lang = lang === 'all' || !lang ? ['coptic', 'english', 'arabic'] : [lang]
-    console.log(lang);
+    lang = lang === 'all' || !lang ? ['englishtext', 'arabictext','coptictext_utf8'] : [lang]
     axios(`https://tasbeha.org/hymn_library/view/${item}`)
         .then(result => {
             const doc = parser.parseFromString(result.data)
 
             const output = {};
             for (let index = 0; index < lang.length; index++) {
-                const text = doc.getElementsByClassName(`${lang[index]}text`)
+                const text = doc.getElementsByClassName(`${lang[index]}`)
                     .filter(verse => verse.firstChild.textContent !== "&nbsp;") //ignore non-required spaces
                     .map(verse => verse.firstChild.textContent)
-                if (lang[index] === 'english') {
+                if (lang[index] === 'englishtext') {
                     let copticEnglish = '';
                     let english = '';
                     let i = text.findIndex(verse => verse.includes('Coptic-English:'))
-                    console.log(i);
-                    copticEnglish = [text[i].split('\n')[1], ...text.splice(i + 1)]
+                    copticEnglish = [text[i]?.split('\n')[1], ...text?.splice(i + 1)]
                     english = text.splice(0, i)
                     output.english = english === '' ? text : english
                     output.copticEnglish = copticEnglish
                 } else {
-                    output[lang[index]] = text
+                    output[lang[index].replace(/text.*/,'')] = text
                 }
             }
 
