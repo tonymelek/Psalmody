@@ -1,0 +1,68 @@
+export default {
+    name: "Who Among gods",
+      "coptic": [
+        "}mahmytco - Nim gar qen ninou]",
+        "Nim gar qen ninou]@ et`oni `mmok `P[[email&#160;protected] `n;ok pe `Vnou] `[email&#160;protected] et`iri `nhan`svyri ",
+        "+ Akouwnh `[email&#160;protected] `ebol qen [email&#160;protected] akcw] `[email&#160;protected] `n`hryi qen pekswbs. ",
+        "Aksenak `e`Amen]@ ak`ini `e`[email&#160;protected] `n]e,[email&#160;protected] qen pima `ete `mmau. ",
+        "+ Aker`hmot nan `[email&#160;protected] `n]`eleu;[email&#160;protected] hwc Nou] `n`aga;[email&#160;protected] je aktwnk akcw] `mmon. ",
+        "}[email&#160;protected]",
+        "`A Pi`,rictoc Pennou]@ twnf `ebol qen nye;[email&#160;protected] `n;of pe `t`apar,[email&#160;protected] `nte ny`etauenkot. ",
+        "+ Afouonhf `[email&#160;protected] }[email&#160;protected] afcaji [email&#160;protected] `mpairy] efjw `mmoc. ",
+        "Je matame na`[email&#160;protected] hina `[email&#160;protected] `e}galile`[email&#160;protected] cenanau `eroi `mmau. ",
+        "+ Ac`i `nje [email&#160;protected] sa nima;[email&#160;protected] pejac je ainau `e`P[[email&#160;protected] ouoh nai petafjotou nac.",
+        "}mahmyt`[email&#160;protected]",
+        "Kalwc qen oume;[email&#160;protected] acswpi qen [email&#160;protected] `nje ;ye;ouab [email&#160;protected] }magdaliny ",
+        "+ Ac`i `epi`[email&#160;protected] qen `vouai `nte [email&#160;protected] ackw] qen ou`[email&#160;protected] `nca `T`anactacic `m`P[oic.",
+        "Acnau `[email&#160;protected] efhemci hijen pi`[email&#160;protected] efws `ebol efjw `[email&#160;protected] je aftwnf `f,y `mpai man an. ",
+        "+ E;be vai ten]`wou [email&#160;protected] enws `ebol enjw `[email&#160;protected] je `k`cmarwout `w Pa[oic [email&#160;protected] je aktwnk akcw]."
+      ],
+      "english": [
+        "Who is likened unto You, O Lord among the gods, You are the true God, the Performer of miracles. ",
+        "+ You revealed Your power, to the people, and You saved Your people, with Your arm. ",
+        "You descended into Hades, and brought up, those who were captives, in that place. ",
+        "+ And granted us again, the freedom, as a good God, for You have risen and saved us. ",
+        "The Seventeenth Part: ",
+        "Christ our God, has risen from the dead, He is the first-fruit, of those who departed. ",
+        "+ He appeared to Mary, Magdalene, and spoke to her, and likewise said. ",
+        "\"Tell My brethren, to proceed, to Galilee, and there they will see Me.\" ",
+        "+ So Mary came forth, to the disciples, and told them she had seen the Lord, and that He told her so. ",
+        "The Eighteenth Part: ",
+        "Truly indeed, it was good caring, of the Saint Mary, Magdalene. ",
+        "+ She came to the grave, on one of the Sabbath days, seeking earnestly, the Resurrection of the Lord. ",
+        "She saw the angel, sitting on the stone, proclaiming and saying, \"He is risen He is not here.\" ",
+        "+ Wherefore we glorify Him, proclaiming and saying, \"Blessed are You O my Lord Jesus, for You have risen and saved us.\" "
+      ],
+      "copticEnglish": [
+        "Nim ghar khenni-nouti, et-oni emmok Epshois, enthok pe-Efnouti me, et-eri enhan eshfiri.",
+        "Ak-o-onhn entek-gom, evol khen ni-laos, aksoti empek-laos, enihre khen pek-shobsh.",
+        "Akshenak e-Aminti, ak-e-ne e-epshoy, enti ek-maloseia khen pima e-te emmav.",
+        "Ek-er ehmot nan enkesop, enti elev-thereia hos noti en-aghathos, je aktonk aksoti emmon.",
+        "Seventeenth Part","Apekhrestos pennouti, tonf evol khenni-ethmo-ot, enthof pe-et-aparshe, ente ny-etav-enkot.",
+        "Af-o-onhfe e-Maria, ti-Madaleni, afcaje nemas, empay-riti efgo emmos.",
+        "Je-matame na esneio, hina ento-shenou-oo, e-ti-Gallele-a, se-nanav eroy emmav.",
+        "As-e enje Maria, sha ni-mathetis, pegas je ainav Epshois, owoh nai petaf-goto nas.",
+        "Eighteenth Part","Kalos khen omethme, as-shopi khen o-firo-osh, enje the-ethowab Maria, ti-Madaleni",
+        "As-e epi emhav, khen ef-owai ente-ni-savaton, aksoti khen o-espody, ensa et-anstasis emipshois.",
+        "Asnav epi-angelos, af-hemsi hijen pi-o-oini, efosh evol efgo emmos, je aftonf efke empai man an.",
+        "Ethve fai ten-ti-o-oo naf enosh evol engo emmos, je ekis-maro-oot o pashois Esos, je aktonk aksoti emmon."
+      ],
+      "arabic": [
+        "القطعة السادسة عشر - نيم غار",
+        "مَنْ في الآلهة، يشبهك يا رب، أنت هو الإله الحقيقي، الصانع العجائب. ",
+        "+ أظهرت قوتك، في الشعوب، وخلصت شعبك، بذراعك. ",
+        "مضيت إلى الجحيم، وأصعدتَ، السبي من ذلك، المكان. ",
+        "+ وأنعمت علينا، مرة أخرى بالحرية، كإله صالح، لأنك قُمت وخلصتنا. ",
+        "القطعة السابعة عشر: ",
+        "المسيح إلهنا، قام من الأموات، وهو باكورة، الراقدين. ",
+        "+ ظهر لمريم، المجدلية، وخاطبها، هكذا قائلاً. ",
+        "\"إعلمي إخوتي، أن يذهبوا، إلى الجليل، هناك يرونني.\" ",
+        "فجاءت مريم، إلى التلاميذ، وقالت أنها رأت الرب، وأنه قال لها هذا. ",
+        "القطعة الثامنة عشر: ",
+        "كان بالحقيقة، إهتمام القديسة، مريم المجدلية، حسناً. ",
+        "+ في أحد السبوت، أتت إلى القبر، طالبة باجتهاد، قيامة الرب. ",
+        "فرأت الملاك، جالساً على الحجر، صارخاً قائلاً، \"قد قام ليس هو ههنا.\" ",
+        "+ فلهذا نمجده، صارخين قائلين، \"مبارك أنت يا ربي يسوع، لأنك قُمت وخلصتنا.\" "
+      ]
+    }
+  
