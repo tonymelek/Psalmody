@@ -71,7 +71,7 @@
                     <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('english')">
                         {{ hymn.english[verse - 1] }}
                     </div>
-                    <div :class="colsCount" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('copticEnglish')">
+                    <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('copticEnglish')">
                         {{ hymn.copticEnglish[verse - 1] }}</div>
                     <div class="arabic pre-wrap" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
                         v-show="showLang('arabic')">

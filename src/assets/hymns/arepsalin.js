@@ -29,7 +29,7 @@ export default {
         "+ Coolness and repose without ceasing, grant unto all of us, that we may joyfully proclaim, praise Him and exalt Him above all. \n+ And also Your poor servant Sarkis, make him without condemnation, that he may join all those and say, praise Him and exalt Him above all. "
       ],
       "copticEnglish": [
-        "Aripsalin efe-etav ashf, e-ehri egon owoh avkosf, aftonf afkorf emef-mo afti shoshf, hos erof areh ho-oo chasf.",
+        "Aripsalin efe-etav ashf, e-ehri egon owoh avkosf, aftonf afkorf emef-mo afti shoshf, hos erof areh ho-oo chasf.\nVosh empi-romi empali-os, owoh golh empi-veri evek-leos, owoh ekhon emgha-elos, hos erof areh ho-oo chasf.",
         "Genos enikh-resteyanos, ni-epres-veteros ke zeia-konos, ma-o-oo emip-shois je ohi-kanos, hos erof areh ho-oo chasf.\nZevte haron o-pi-shomt en-alo, eta Pekhrestos pennouti olo, af-nahmo evol hapi-zeiav-lo, hos erof areh ho-oo chasf.",
         "Ethve peknouti Maseias, ef-refti enev-erge-seias, a-mo sharon Ana-neias, hos erof areh ho-oo chasf.\nZelote Azareias, esperas ke epro-e ke miss-mev-reias, ma-o-oo enet-gom in-Tit-reias, hos erof areh ho-oo chasf.",
         "Eppe ghar yes Emmanoueel, he ten-me-ti o Mesaeel, lali khen o-esme en-theleel, hos erof areh ho-oo chasf.\nTho-ooti tino kate shin teroo, saji nemni-epres-ve-tero, esmo Epshois nef-ehve-owee teroo, hos erof areh ho-oo chasf.",
