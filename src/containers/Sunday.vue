@@ -68,12 +68,12 @@
             <h3 class="text-danger text-center pt-5" :id="hymn.name">{{ hymn.name }}</h3>
             <div v-for="verse in hymn.english.length" class="container">
                 <div class="row my-3" :class="{ 'text-primary': verse % 2 === 0 }">
-                    <div :class="colsCount" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('english')">
+                    <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('english')">
                         {{ hymn.english[verse - 1] }}
                     </div>
                     <div :class="colsCount" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('copticEnglish')">
                         {{ hymn.copticEnglish[verse - 1] }}</div>
-                    <div class="arabic" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
+                    <div class="arabic pre-wrap" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
                         v-show="showLang('arabic')">
                         {{ hymn.arabic[verse] }}
                     </div>

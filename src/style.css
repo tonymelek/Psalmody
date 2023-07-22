@@ -1,6 +1,9 @@
 .arabic{
   direction: rtl;
 }
+.pre-wrap{
+  white-space: pre-wrap;
+}
 .inline-block{
   display: inline-block;
 }
