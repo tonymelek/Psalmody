@@ -93,3 +93,8 @@ input:checked + .slider:before {
 a{
   text-decoration: none;
 }
+.verses:nth-child(odd){
+  background-color: beige;
+  margin-top: 0;
+  margin-bottom: 0;
+}

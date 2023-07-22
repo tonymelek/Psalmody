@@ -66,8 +66,8 @@
         </div>
         <div v-for="hymn in selectedHymns" :class="{ 'd-none': langsCount === 0 }">
             <h3 class="text-danger text-center pt-5" :id="hymn.name">{{ hymn.name }}</h3>
-            <div v-for="verse in hymn.english.length" class="container">
-                <div class="row my-3" :class="{ 'text-primary': verse % 2 === 0 }">
+            <div v-for="verse in hymn.english.length" class="container verses">
+                <div class="row my-3 " :class="{ 'text-primary': verse % 2 === 0 }">
                     <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('english')">
                         {{ hymn.english[verse - 1] }}
                     </div>
