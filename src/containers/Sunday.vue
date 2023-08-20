@@ -146,7 +146,7 @@ export default {
         }
     },
     mounted() {
-
+        this.$router.push('/slides')
     },
     computed: {
         langsCount() {
