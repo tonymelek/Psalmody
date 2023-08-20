@@ -19,26 +19,62 @@ import theotokia_tenth_to_fifteenth from './theotokia_tenth_to_fifteenth.js'
 import shere_ne_maria from './shere_ne_maria.js';
 import semoti from './semoti.js';
 import seven_times from './seven_times.js'
+import fs from 'fs';
 
-export default 
-[ten_thino,
-     first_hoos,
-      first_lobsh,
-       second_hoos, 
-       second_lobsh,
-       third_hoos,
-       arepsalin,
-        tenoweeh,
-        comemoration,
-        fourth_hoos,
-        aynahti,
-        aykoti,
-        theotokia_intro,
-        theotokia,
-        shere_ne_maria,
-        semoti,
-        seven_times,
-        theotokia_tenth_to_fifteenth,
-        whoAmongGods,
-        amenKerialaison
-    ]
+
+const hymns=[ten_thino,
+    first_hoos,
+     first_lobsh,
+      second_hoos, 
+      second_lobsh,
+      third_hoos,
+      arepsalin,
+       tenoweeh,
+       comemoration,
+       fourth_hoos,
+       aynahti,
+       aykoti,
+       theotokia_intro,
+       theotokia,
+       shere_ne_maria,
+       semoti,
+       seven_times,
+       theotokia_tenth_to_fifteenth,
+       whoAmongGods,
+       amenKerialaison
+   ]
+
+
+for(let hymn of hymns){
+    hymn={...hymn, arabic:hymn.arabic.slice(1)}
+    fs.writeFileSync(`/home/tony/Psalmody/src/assets/hymns/new-hymns/${hymn.name.replace(/\s/g,'_')}.json`,JSON.stringify(hymn,null,2),'utf-8')
+}
+fs.writeFileSync(`/home/tony/Psalmody/src/assets/hymns/new-hymns/hymns.json`,JSON.stringify(hymns.map(hymn=>hymn.name.replace(/\s/g,'_')),null,2),'utf-8')
+
+fs.writeFileSync(`/home/tony/Psalmody/src/assets/hymns/new-hymns/index.js`,`${hymns.map(hymn=>`import ${hymn.name.replace(/\s/g,'_')} from './${hymn.name.replace(/\s/g,'_')}.json'`).join(';\n')}
+
+export default [${hymns.map(hymn=>`\n${hymn.name.replace(/\s/g,'_')}`)}];
+`,'utf-8')
+
+// export default 
+// [ten_thino,
+//      first_hoos,
+//       first_lobsh,
+//        second_hoos, 
+//        second_lobsh,
+//        third_hoos,
+//        arepsalin,
+//         tenoweeh,
+//         comemoration,
+//         fourth_hoos,
+//         aynahti,
+//         aykoti,
+//         theotokia_intro,
+//         theotokia,
+//         shere_ne_maria,
+//         semoti,
+//         seven_times,
+//         theotokia_tenth_to_fifteenth,
+//         whoAmongGods,
+//         amenKerialaison
+//     ]

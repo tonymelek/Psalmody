@@ -86,7 +86,6 @@ export default {
         "Epshois ek-e a-ou-own, enna esvoto, owoh ere roy go empek esmo."
     ],
     "arabic": [
-        "لحن تين ثينو",
         "قوموا يا بني النور، لنسبح رب القوات.",
         "+ لكي ينعم لنا بخلاص نفوسنا.",
         "عندما نقف أمامك جسدياً.",
