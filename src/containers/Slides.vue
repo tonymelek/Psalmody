@@ -4,9 +4,9 @@
             <div class="container ">
 
             <div class="row">
-                <div class="row text-center align-items-center">
+                <div class="row text-center align-items-center mt-4">
                 <h1 @click="goPreviousHymn" class="col cursor-pointer">&lt;</h1>
-                <h1 class="col text-danger mt-4">{{ currentHymn.name }}</h1>    
+                <h1 class="col text-danger">{{ currentHymn.name }}</h1>    
                 <h1 @click="goNextHymn" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'">&gt;</h1>
             </div>
                 <div v-for="(verse,index) in currentVerses[0].verses" class="row verses-slides" >
