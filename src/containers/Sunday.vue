@@ -132,10 +132,8 @@ export default {
         }
         ,
         toggleHymn(name) {
-            console.log(name);
             const hymn = this.selectedHymns.find(hymn => hymn.name === name)
             const index = this.hymns.findIndex(hymn => hymn.name === name)
-            console.log(index);
             if (hymn) {
                 this.selectedHymns = this.selectedHymns.filter(hymn => hymn.name !== name)
             } else {

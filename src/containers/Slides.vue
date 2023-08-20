@@ -4,7 +4,11 @@
             <div class="container ">
 
             <div class="row">
-                <h1 class="text-danger text-center mt-4" :id="currentHymn.name">{{ currentHymn.name }}</h1>
+                <div class="row text-center align-items-center">
+                <h1 @click="goPreviousHymn" class="col cursor-pointer">&lt;</h1>
+                <h1 class="col text-danger mt-4">{{ currentHymn.name }}</h1>    
+                <h1 @click="goNextHymn" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'">&gt;</h1>
+            </div>
                 <div v-for="(verse,index) in currentVerses[0].verses" class="row verses-slides" >
                 <div v-for="(verseGroup,langIndex) in currentVerses" class="col my-4 pre-wrap " :class="verseGroup.lang==='arabic'?'arabic':''" >
                     {{ currentVerses[langIndex].verses[index]}}
@@ -23,11 +27,11 @@
                 <h2 @click="decrementverseGroup" class="col cursor-pointer h-70"></h2>
                 <h2 @click="incrementverseGroup" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'"></h2>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <h2 @click="goPreviousHymn" class="col cursor-pointer">&lt;</h2>
                 <h2 class="col">{{ currentHymn.name }}</h2>    
                 <h2 @click="goNextHymn" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'">&gt;</h2>
-            </div>
+            </div> -->
         </div>
 
 
