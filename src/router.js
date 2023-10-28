@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, createMemoryHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Sunday from '../src/containers/Sunday.vue';
 import Slides from '../src/containers/Slides.vue';
 
@@ -9,6 +9,6 @@ const routes = [
 ]
 
 export const router = createRouter({
-    history: createMemoryHistory(),
+    history: createWebHistory(),
     routes, // short for `routes: routes`
 })

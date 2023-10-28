@@ -1,17 +1,15 @@
 <template>
-    <div class="bg-dark text-light h-100">
-           
+    <div class="bg-dark text-light h-100">  
             <div class="container ">
-
             <div class="row">
-                <div class="row text-center align-items-center mt-4">
+                <div class="row text-center align-items-center mt-4 sticky-top bg-dark">
                 <h1 @click="goPreviousHymn" class="col cursor-pointer">&lt;</h1>
                 <h1 class="col text-danger">{{ currentHymn.name }}</h1>    
                 <h1 @click="goNextHymn" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'">&gt;</h1>
             </div>
                 <div v-for="(verse,index) in currentVerses[0].verses" class="row verses-slides" >
                 <div v-for="(verseGroup,langIndex) in currentVerses" class="col my-4 pre-wrap " :class="verseGroup.lang==='arabic'?'arabic':''" >
-                    {{ currentVerses[langIndex].verses[index]}}
+                    <p>{{ currentVerses[langIndex].verses[index]}}</p>
                 </div>
                 </div>
              
@@ -48,6 +46,9 @@ import hymns from '../assets/hymns/new-hymns'
             verseGroupIndex:0,
             hymnIndex:0,
         }),
+        mounted(){
+            if(window.innerHeight>window.innerWidth) this.$router.push('/')
+        },
         computed:{
             currentHymn(){
                 return this.selectedHymns[this.hymnIndex]
@@ -96,7 +97,7 @@ import hymns from '../assets/hymns/new-hymns'
 <style scoped>
 .h-100{
     position: relative;
-    min-height: 100vh;
+    min-height: 100svh;
 }
 .h-70{
     min-height: 70vh;
@@ -109,5 +110,7 @@ import hymns from '../assets/hymns/new-hymns'
     z-index: 10;
     /* transform: translate(13%,-10%); */
 }
-
+p{
+    font-size: 4vh;
+}
 </style>

@@ -144,7 +144,7 @@ export default {
         }
     },
     mounted() {
-        this.$router.push('/slides')
+        if(window.innerHeight<window.innerWidth) this.$router.push('/slides')
     },
     computed: {
         langsCount() {
