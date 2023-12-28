@@ -50,7 +50,7 @@
                     <div v-else>
                         <button class="btn btn-warning mb-3" @click="select('none')">Select None</button>
                     </div>
-                    <div v-for="hymn in hymns" class="mx-2 mb-1">
+                    <div v-for="hymn in hymns" class="mx-2 mb-1" :key="hymn.name">
                         <div class="d-flex justify-content-between align-items-center">
                             <a :href="`#${hymn.name}`" @click="toggle('menu')">{{ hymn.name }}</a>
                             <label class="switch">
@@ -75,7 +75,7 @@
                         {{ hymn.copticEnglish[verse - 1] }}</div>
                     <div class="arabic pre-wrap" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
                         v-show="showLang('arabic')">
-                        {{ hymn.arabic[verse] }}
+                        {{ hymn.arabic[verse-1] }}
                     </div>
 
                 </div>
