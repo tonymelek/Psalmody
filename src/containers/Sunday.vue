@@ -5,7 +5,7 @@
                 <div class="m-0 cursor-pointer" @click="toggle('menu', showMenu)">
                     <!-- <span v-if="showMenu">Hide Menu</span>
                 <span v-else>Show Menu</span> -->
-                    <img src="../assets/imgs/menu.png" alt="menu" width="40">
+                    <img src="/imgs/menu.png" alt="menu" width="40">
                 </div>
                 <div class="d-flex  align-items-center">
                     <p @click="changeFontSize(-.25)" class="cursor-pointer my-0 font-border">A</p>
