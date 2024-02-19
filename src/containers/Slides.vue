@@ -22,14 +22,9 @@
             </div>
             <div class="absolute">
             <div class="row">
-                <h2 @click="decrementverseGroup" class="col cursor-pointer h-70"></h2>
-                <h2 @click="incrementverseGroup" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'"></h2>
+                <div @click="decrementverseGroup" class="col cursor-pointer h-70"></div>
+                <div @click="incrementverseGroup" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'"></div>
             </div>
-            <!-- <div class="row">
-                <h2 @click="goPreviousHymn" class="col cursor-pointer">&lt;</h2>
-                <h2 class="col">{{ currentHymn.name }}</h2>    
-                <h2 @click="goNextHymn" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'">&gt;</h2>
-            </div> -->
         </div>
 
 
@@ -48,6 +43,21 @@ import hymns from '../assets/hymns/new-hymns'
         }),
         mounted(){
             if(window.innerHeight>window.innerWidth) this.$router.push('/')
+        },
+        watch:{
+            currentHymn: {
+                handler(val){
+                    setTimeout(()=>{
+                    if(document.body.scrollHeight-window.innerHeight>100){
+                        this.verseGroupSize=1;
+                    }else{
+                        this.verseGroupSize=2;
+                    }
+                    console.log(document.body.scrollHeight,window.innerHeight)
+                },0)
+                },
+                deep: true
+  }
         },
         computed:{
             currentHymn(){
@@ -81,12 +91,15 @@ import hymns from '../assets/hymns/new-hymns'
                     this.hymnIndex++ 
                     this.verseGroupIndex=0;
                 }
+            
+
             },
             goPreviousHymn(){
                 if(this.hymnIndex>0) {
                     this.hymnIndex-- 
                     this.verseGroupIndex=0;
                 }
+       
             }
             
         }
