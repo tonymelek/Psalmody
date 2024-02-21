@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-dark text-light h-100">  
-            <div class="container ">
+    <div class="text-light bg-dark wrapper">  
+            <div class="container">
             <div class="row">
-                <div class="row text-center align-items-center mt-4 sticky-top bg-dark">
+                <div class="row text-center align-items-center mt-4">
                 <h1 @click="goPreviousHymn" class="col cursor-pointer">&lt;</h1>
                 <h1 class="col text-danger">{{ currentHymn.name }}</h1>    
                 <h1 @click="goNextHymn" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'">&gt;</h1>
@@ -48,7 +48,7 @@ import hymns from '../assets/hymns/new-hymns'
             currentHymn: {
                 handler(val){
                     setTimeout(()=>{
-                    if(document.body.scrollHeight-window.innerHeight>100){
+                    if(document.body.scrollHeight>window.innerHeight){
                         this.verseGroupSize=1;
                     }else{
                         this.verseGroupSize=2;
@@ -108,9 +108,8 @@ import hymns from '../assets/hymns/new-hymns'
 </script>
 
 <style scoped>
-.h-100{
-    position: relative;
-    min-height: 100svh;
+.wrapper{
+    height:100svh;
 }
 .h-70{
     min-height: 70vh;

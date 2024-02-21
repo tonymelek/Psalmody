@@ -1,3 +1,6 @@
+html {
+  overflow-x: hidden;
+}
 .arabic{
   direction: rtl;
 }
@@ -10,7 +13,7 @@
 .text-right{
   text-align: right;
 }
-.cursor-pointer{
+.cursor-pointer:hover{
   cursor: pointer;
 }
 .stick{
