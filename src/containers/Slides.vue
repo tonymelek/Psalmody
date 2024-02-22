@@ -1,5 +1,5 @@
 <template>
-    <div class="text-light bg-dark wrapper">  
+    <div class="text-light  wrapper">  
             <div class="container">
             <div class="row">
                 <div class="row text-center align-items-center mt-4">
@@ -33,6 +33,11 @@
 
 <script>
 import hymns from '../assets/hymns/new-hymns'
+const waitFor=(timeout)=>new Promise((res,rej)=>{
+    setTimeout(()=>{
+        res();
+    },timeout);
+});
     export default {
         name:'tasbeha-slides',
         data:()=>({
@@ -42,22 +47,24 @@ import hymns from '../assets/hymns/new-hymns'
             hymnIndex:0,
         }),
         mounted(){
+            console.log(document.querySelector('body').setAttribute('style','background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;'));
             if(window.innerHeight>window.innerWidth) this.$router.push('/')
         },
         watch:{
             currentHymn: {
-                handler(val){
-                    setTimeout(()=>{
+                async handler(val){
+                    await waitFor(0);
                     if(document.body.scrollHeight>window.innerHeight){
                         this.verseGroupSize=1;
                     }else{
                         this.verseGroupSize=2;
+                        await waitFor(0);
+                        if(document.body.scrollHeight>window.innerHeight) this.verseGroupSize=1;
                     }
-                    console.log(document.body.scrollHeight,window.innerHeight)
-                },0)
+                    
+                }
                 },
                 deep: true
-  }
         },
         computed:{
             currentHymn(){
@@ -107,9 +114,10 @@ import hymns from '../assets/hymns/new-hymns'
     }
 </script>
 
+
 <style scoped>
 .wrapper{
-    height:100svh;
+    max-height: 100%;
 }
 .h-70{
     min-height: 70vh;
