@@ -1,15 +1,23 @@
 <template>
-    <div class="text-light  wrapper">  
+    <div class="text-light  wrapper prevent-select">  
             <div class="container">
-            <div class="row">
-                <div class="row text-center align-items-center mt-4">
-                <h1 @click="goPreviousHymn" class="col cursor-pointer">&lt;</h1>
-                <h1 class="col text-danger">{{ currentHymn.name }}</h1>    
-                <h1 @click="goNextHymn" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'">&gt;</h1>
+            <nav class="d-flex justify-content-between nav-bar p-2 mt-1">
+                <div></div>
+                <div class="d-flex align-items-center justify-content-center w-50">
+                <h1 @click="goPreviousHymn" class="cursor-pointer" :class="hymnIndex===0 &&'d-none'">&lt;</h1>
+                <h1 class="text-danger text-center mx-4 w-75">{{ currentHymn.name }}</h1>    
+                <h1 @click="goNextHymn" class="cursor-pointer" :class="hymnIndex===selectedHymns.length-1 &&'d-none'">&gt;</h1>
+               </div>
+                <div class="d-flex align-items-center">
+                <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
+                <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
             </div>
+           </nav>
+            <div class="row">
+        
                 <div v-for="(verse,index) in currentVerses[0].verses" class="row verses-slides" >
                 <div v-for="(verseGroup,langIndex) in currentVerses" class="col my-4 pre-wrap " :class="verseGroup.lang==='arabic'?'arabic':''" >
-                    <p>{{ currentVerses[langIndex].verses[index]}}</p>
+                    <p :style="{ 'font-size': fontSizeWithRem }">{{ currentVerses[langIndex].verses[index]}}</p>
                 </div>
                 </div>
              
@@ -38,6 +46,16 @@ const waitFor=(timeout)=>new Promise((res,rej)=>{
         res();
     },timeout);
 });
+const adjustHeight=async(_this)=>{
+                    await waitFor(0);
+                    if(document.body.scrollHeight>window.innerHeight){
+                        _this.verseGroupSize=1;
+                    }else{
+                        _this.verseGroupSize=2;
+                        await waitFor(0);
+                        if(document.body.scrollHeight>window.innerHeight) _this.verseGroupSize=1;
+                    }
+}
     export default {
         name:'tasbeha-slides',
         data:()=>({
@@ -45,23 +63,16 @@ const waitFor=(timeout)=>new Promise((res,rej)=>{
             verseGroupSize:2,
             verseGroupIndex:0,
             hymnIndex:0,
+            fontSize:1.5
         }),
         mounted(){
-            console.log(document.querySelector('body').setAttribute('style','background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;'));
+            document.querySelector('body').setAttribute('style','background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
             if(window.innerHeight>window.innerWidth) this.$router.push('/')
         },
         watch:{
             currentHymn: {
                 async handler(val){
-                    await waitFor(0);
-                    if(document.body.scrollHeight>window.innerHeight){
-                        this.verseGroupSize=1;
-                    }else{
-                        this.verseGroupSize=2;
-                        await waitFor(0);
-                        if(document.body.scrollHeight>window.innerHeight) this.verseGroupSize=1;
-                    }
-                    
+                    await adjustHeight(this);           
                 }
                 },
                 deep: true
@@ -75,6 +86,9 @@ const waitFor=(timeout)=>new Promise((res,rej)=>{
                 const lastVerseIndex=this.verseGroupSize*(this.verseGroupIndex+1);
                 const languages=['english','copticEnglish','arabic'];
                 return languages.map(lang=>({lang,verses:this.currentHymn[lang].slice(startingVerseIndex,lastVerseIndex)}))
+            },
+            fontSizeWithRem(){
+                return `${this.fontSize}rem`
             }
         },
         methods:{
@@ -89,6 +103,8 @@ const waitFor=(timeout)=>new Promise((res,rej)=>{
             decrementverseGroup(){
                 if(this.verseGroupIndex===0 &&this.hymnIndex>0){
                     this.hymnIndex--
+                }else if (this.verseGroupIndex===0 &&this.hymnIndex===0){
+                    //do nothing
                 }else{
                     this.verseGroupIndex--
                 }
@@ -107,6 +123,14 @@ const waitFor=(timeout)=>new Promise((res,rej)=>{
                     this.verseGroupIndex=0;
                 }
        
+            },
+            async changeFontSize(sign){
+                if(sign=='+'){
+                    this.fontSize+=0.25;
+                }else{
+                    this.fontSize-=0.25;
+                }
+                if(this.verseGroupIndex===0) await adjustHeight(this);
             }
             
         }
@@ -132,5 +156,31 @@ const waitFor=(timeout)=>new Promise((res,rej)=>{
 }
 p{
     font-size: 4vh;
+}
+.bigger{
+    font-size: 2rem;
+    font-weight: bolder;
+    height: 3rem;
+    width: 3rem;
+}
+.smaller{
+    font-size: 1rem;
+    height: 3rem;
+    width: 3rem;
+    vertical-align: bottom;
+}
+.nav-bar{
+    border:2px solid wheat;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #9ecaed;
+}
+button{
+    border-radius: 5px;
+    margin:0 5px;
+}
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 </style>
