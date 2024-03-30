@@ -18,6 +18,8 @@ import Seven_times from './Seven_times.json';
 import Theotokia_Parts_10_to_15 from './Theotokia_Parts_10_to_15.json';
 import Who_Among_gods from './Who_Among_gods.json';
 import Amen_Keryalison from './Amen_Keryalison.json'
+import Doxology_Mary from './Doxology_Mary.json'
+import Doxology_Michael from './Doxology_Michael.json'
 
 export default [
 Ten_Thino,
@@ -29,6 +31,8 @@ Third_Hoos,
 Arepsalin,
 Ten_Oweeh_Enthok,
 Comemoration,
+Doxology_Mary,
+Doxology_Michael,
 Fourth_Hoos,
 Aynahti,
 Aykoti,
