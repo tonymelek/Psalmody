@@ -4,16 +4,16 @@
                <div class="d-flex align-items-center mt-1 ">
                      <span  
                      @click.prevent="toggleMenu" 
-                     class="nav-bar menu-icon material-symbols-outlined d-inline-block pt-1 px-2" 
-                     :class="isMenuOpen?'menu-icon-rotate':'menu-icon-rotate-reverse'">menu</span>
+                     class="nav-bar menu-icon material-symbols-outlined d-inline-block p-2" 
+                     :class="isMenuOpen?'menu-icon-rotate me-2':'menu-icon-rotate-reverse'">menu</span>
 
-                <nav class="justify-content-between" :class="isMenuOpen?'d-flex p-2 animate__animated animate__fadeInLeft w-100 nav-bar':'d-inline-block'">
-                    <div class=" align-items-center justify-content-around w-100" :class="isMenuOpen?'d-flex':'d-none'">
+                <nav class="d-flex justify-content-between p-2 w-100 nav-bar" :class="isMenuOpen?'animate__animated animate__fadeInLeft':'animate-fadeInRight'">
+                    <div class="d-flex align-items-center justify-content-around w-100" >
                         <h1 @click="goPreviousHymn" class="cursor-pointer" :class="hymnIndex===0 &&'d-none'">&lt;</h1>
                         <h1 class="text-danger text-center mx-4 w-75">{{ currentHymn.name }}</h1>    
                         <h1 @click="goNextHymn" class="cursor-pointer" :class="hymnIndex===selectedHymns.length-1 &&'d-none'">&gt;</h1>
                     </div>
-                    <div class="d-flex align-items-center" :class="isMenuOpen?'d-flex':'d-none'">
+                    <div class="d-flex align-items-center">
                         <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
                         <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
                     </div>
@@ -221,18 +221,19 @@ button{
     animation: rotate-menu-reverse .5s  linear forwards;
 }
 
-.nav-bar {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+@keyframes animate__fadeInRight{
+    0%{
+        opacity: 0;
+        transform: translate3d(0, 0, 0);
+    }
+    100%{
+        transform: translate3d(0, -120%, 0);
+        opacity: 1;
+    }
+}
+.animate-fadeInRight{
+    animation: animate__fadeInRight 1s linear forwards;
 }
 
-.nav-bar.collapsed {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
-.nav-bar.expanded {
-  transform: translateX(0);
-  opacity: 1;
-}
 
 </style>
