@@ -1,18 +1,25 @@
 <template>
     <div class="text-light  wrapper prevent-select">  
             <div class="container">
-            <nav class="d-flex justify-content-between nav-bar p-2 mt-1">
-                <div></div>
-                <div class="d-flex align-items-center justify-content-center w-50">
-                <h1 @click="goPreviousHymn" class="cursor-pointer" :class="hymnIndex===0 &&'d-none'">&lt;</h1>
-                <h1 class="text-danger text-center mx-4 w-75">{{ currentHymn.name }}</h1>    
-                <h1 @click="goNextHymn" class="cursor-pointer" :class="hymnIndex===selectedHymns.length-1 &&'d-none'">&gt;</h1>
-               </div>
-                <div class="d-flex align-items-center">
-                <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
-                <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
+               <div class="d-flex align-items-center mt-1 ">
+                     <span  
+                     @click.prevent="toggleMenu" 
+                     class="nav-bar menu-icon material-symbols-outlined d-inline-block pt-1 px-2" 
+                     :class="isMenuOpen?'menu-icon-rotate':'menu-icon-rotate-reverse'">menu</span>
+
+                <nav class="justify-content-between" :class="isMenuOpen?'d-flex p-2 animate__animated animate__fadeInLeft w-100 nav-bar':'d-inline-block'">
+                    <div class=" align-items-center justify-content-around w-100" :class="isMenuOpen?'d-flex':'d-none'">
+                        <h1 @click="goPreviousHymn" class="cursor-pointer" :class="hymnIndex===0 &&'d-none'">&lt;</h1>
+                        <h1 class="text-danger text-center mx-4 w-75">{{ currentHymn.name }}</h1>    
+                        <h1 @click="goNextHymn" class="cursor-pointer" :class="hymnIndex===selectedHymns.length-1 &&'d-none'">&gt;</h1>
+                    </div>
+                    <div class="d-flex align-items-center" :class="isMenuOpen?'d-flex':'d-none'">
+                        <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
+                        <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
+                    </div>
+              </nav>
             </div>
-           </nav>
+               
             <div class="row">
         
                 <div v-for="(verse,index) in currentVerses[0].verses" class="row verses-slides" >
@@ -63,7 +70,8 @@ const adjustHeight=async(_this)=>{
             verseGroupSize:2,
             verseGroupIndex:0,
             hymnIndex:0,
-            fontSize:1.5
+            fontSize:1.5,
+            isMenuOpen:false
         }),
         mounted(){
             document.querySelector('body').setAttribute('style','background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
@@ -131,6 +139,9 @@ const adjustHeight=async(_this)=>{
                     this.fontSize-=0.25;
                 }
                 if(this.verseGroupIndex===0) await adjustHeight(this);
+            },
+            toggleMenu(){
+                this.isMenuOpen=!this.isMenuOpen;
             }
             
         }
@@ -150,7 +161,7 @@ const adjustHeight=async(_this)=>{
     text-align: center;
     min-width: 100%;
     position: absolute;
-    bottom: 10%;
+    top: 70px;
     z-index: 10;
     /* transform: translate(13%,-10%); */
 }
@@ -183,4 +194,45 @@ button{
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
 }
+@keyframes rotate-menu {
+           0%{
+            transform: rotate(0deg);
+           } 
+           100%{
+            transform: rotate(90deg);
+           }
+        }
+@keyframes rotate-menu-reverse {
+    0%{
+    transform: rotate(90deg);
+    } 
+    100%{
+    transform: rotate(0deg);
+    }
+}
+          
+.menu-icon{
+    font-size: 2.5rem;
+}
+.menu-icon-rotate{
+    animation: rotate-menu .5s  linear forwards;
+}
+.menu-icon-rotate-reverse{
+    animation: rotate-menu-reverse .5s  linear forwards;
+}
+
+.nav-bar {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-bar.collapsed {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.nav-bar.expanded {
+  transform: translateX(0);
+  opacity: 1;
+}
+
 </style>
