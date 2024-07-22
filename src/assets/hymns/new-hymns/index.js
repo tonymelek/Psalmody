@@ -11,11 +11,21 @@ import Fourth_Hoos from './Fourth_Hoos.json';
 import Aynahti from './Aynahti.json';
 import Aykoti from './Aykoti.json';
 import Theotoky_Adam_Intro from './Theotoky_Adam_Intro.json';
-import Theotokia_Parts_1_to_6 from './Theotokia_Parts_1_to_6.json';
+import Theotoky_part_1 from './Theotoky_part_1.json';
+import Theotoky_part_2 from './Theotoky_part_2.json';
+import Theotoky_part_3 from './Theotoky_part_3.json';
+import Theotoky_part_4 from './Theotoky_part_4.json';
+import Theotoky_part_5 from './Theotoky_part_5.json';
+import Theotoky_part_6 from './Theotoky_part_6.json';
 import Shere_ne_Maria from './Shere_ne_Maria.json';
 import Semouti from './Semouti.json';
 import Seven_times from './Seven_times.json';
-import Theotokia_Parts_10_to_15 from './Theotokia_Parts_10_to_15.json';
+import Theotoky_part_10 from './Theotoky_part_10.json';
+import Theotoky_part_11 from './Theotoky_part_11.json';
+import Theotoky_part_12 from './Theotoky_part_12.json';
+import Theotoky_part_13 from './Theotoky_part_13.json';
+import Theotoky_part_14 from './Theotoky_part_14.json';
+import Theotoky_part_15 from './Theotoky_part_15.json';
 import Who_Among_gods from './Who_Among_gods.json';
 import Amen_Keryalison from './Amen_Keryalison.json'
 import Doxology_Mary from './Doxology_Mary.json'
@@ -37,10 +47,21 @@ Fourth_Hoos,
 Aynahti,
 Aykoti,
 Theotoky_Adam_Intro,
-Theotokia_Parts_1_to_6,
+Theotoky_part_1,
+Theotoky_part_2,
+Theotoky_part_3,
+Theotoky_part_4,
+Theotoky_part_5,
+Theotoky_part_6,
 Shere_ne_Maria,
 Semouti,
 Seven_times,
-Theotokia_Parts_10_to_15,
+Theotoky_part_10,
+Theotoky_part_11,
+Theotoky_part_12,
+Theotoky_part_13,
+Theotoky_part_14,
+Theotoky_part_15,
 Who_Among_gods,
-Amen_Keryalison];
+Amen_Keryalison
+];
