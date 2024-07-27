@@ -1,21 +1,23 @@
 <template>
     <div class="text-light  wrapper prevent-select">  
-            <div class="container">
-               <div class="d-flex align-items-center mt-1 ">
+            <div class="container position-relative">
+               <div class="d-flex align-items-start mt-1 ">
                      <span  
                      @click.prevent="toggleMenu" 
                      class="nav-bar menu-icon material-symbols-outlined d-inline-block p-2" 
                      :class="isMenuOpen?'menu-icon-rotate me-2':'menu-icon-rotate-reverse'">menu</span>
 
-                <nav class="d-flex justify-content-between p-2 w-100 nav-bar" :class="isMenuOpen?'animate__animated animate__fadeInLeft':'animate-fadeInRight'">
-                    <div class="d-flex align-items-center justify-content-around w-100" >
-                        <h1 @click="goPreviousHymn" class="cursor-pointer" :class="hymnIndex===0 &&'d-none'">&lt;</h1>
-                        <h1 class="text-danger text-center mx-4 w-75">{{ currentHymn.name }}</h1>    
-                        <h1 @click="goNextHymn" class="cursor-pointer" :class="hymnIndex===selectedHymns.length-1 &&'d-none'">&gt;</h1>
+                <nav class="d-flex justify-content-between p-2 nav-bar position-absolute bg-dark menu-pos" :class="isMenuOpen?'animate__animated animate__fadeInLeft':'animate-fadeInRight'">
+                    <div>
+                        <div class="position-absolute right">
+                            <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
+                            <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
+                        </div>
+                        <div>
+                        <div class="font-2 px-3" v-for="(hymn,index) in selectedHymns" :key="hymn.name" @click="updateSelectedHymn(index)">
+                            {{ hymn.name }}
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
-                        <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
                     </div>
               </nav>
             </div>
@@ -101,6 +103,7 @@ const adjustHeight=async(_this)=>{
         },
         methods:{
             incrementverseGroup(){
+                this.isMenuOpen=false;
                 if((this.verseGroupIndex+1)*this.verseGroupSize>=this.currentHymn.copticEnglish.length){
                     this.verseGroupIndex=0;
                     this.hymnIndex++ 
@@ -109,6 +112,7 @@ const adjustHeight=async(_this)=>{
                 }
             },
             decrementverseGroup(){
+                this.isMenuOpen=false;
                 if(this.verseGroupIndex===0 &&this.hymnIndex>0){
                     this.hymnIndex--
                 }else if (this.verseGroupIndex===0 &&this.hymnIndex===0){
@@ -142,6 +146,10 @@ const adjustHeight=async(_this)=>{
             },
             toggleMenu(){
                 this.isMenuOpen=!this.isMenuOpen;
+            },
+            updateSelectedHymn(index){
+                this.isMenuOpen=false;
+                this.hymnIndex=index;
             }
             
         }
@@ -233,6 +241,22 @@ button{
 }
 .animate-fadeInRight{
     animation: animate__fadeInRight 1s linear forwards;
+}
+.menu-pos{
+    left:80px;
+    width:60%;
+    min-height: 100%;
+    height: 98svh;
+    z-index:20;
+    cursor: pointer;
+    overflow-y:scroll;
+
+}
+.font-2{
+    font-size: 1.5rem;
+}
+.right{
+    right: 0;
 }
 
 
