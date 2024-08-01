@@ -4,8 +4,9 @@
                <div class="d-flex align-items-start mt-1 ">
                      <span  
                      @click.prevent="toggleMenu" 
-                     class="nav-bar menu-icon material-symbols-outlined d-inline-block p-2" 
+                     class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2" 
                      :class="isMenuOpen?'menu-icon-rotate me-2':'menu-icon-rotate-reverse'">menu</span>
+                     <h1 class="position-absolute header-pos">{{ currentHymn.name }} - ({{ verseGroupIndex+1}}/{{ currentHymnTotalGroups }})</h1>
 
                 <nav class="d-flex justify-content-between p-2 nav-bar position-absolute bg-dark menu-pos" :class="isMenuOpen?'animate__animated animate__fadeInLeft':'animate-fadeInRight'">
                     <div>
@@ -24,9 +25,13 @@
                
             <div class="row">
         
-                <div v-for="(verse,index) in currentVerses[0].verses" class="row verses-slides" >
-                <div v-for="(verseGroup,langIndex) in currentVerses" class="col my-4 pre-wrap " :class="verseGroup.lang==='arabic'?'arabic':''" >
-                    <p :style="{ 'font-size': fontSizeWithRem }">{{ currentVerses[langIndex].verses[index]}}</p>
+                <div v-for="(verse,index) in currentVerses[0].verses" class="row" :class="(currentVerses[0].startingVerseIndex+index)%2===0?'bahari':'quibli'" >
+                <div v-for="(verseGroup,langIndex) in currentVerses" 
+                class="col my-4 pre-wrap"
+                 :class="verseGroup.lang==='arabic'?'arabic':''" >
+                    <p :style="{ 'font-size': fontSizeWithRem }">
+                        {{ currentVerses[langIndex].verses[index]}}
+                    </p>
                 </div>
                 </div>
              
@@ -37,9 +42,9 @@
        
 
             </div>
-            <div class="absolute">
-            <div class="row">
-                <div @click="decrementverseGroup" class="col cursor-pointer h-70"></div>
+            <div class="absolute h-100">
+            <div class="row h-100">
+                <div @click="decrementverseGroup" class="col cursor-pointer"></div>
                 <div @click="incrementverseGroup" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'"></div>
             </div>
         </div>
@@ -50,7 +55,7 @@
 
 <script>
 import hymns from '../assets/hymns/new-hymns'
-const waitFor=(timeout)=>new Promise((res,rej)=>{
+const waitFor=(timeout)=>new Promise((res)=>{
     setTimeout(()=>{
         res();
     },timeout);
@@ -95,16 +100,25 @@ const adjustHeight=async(_this)=>{
                 const startingVerseIndex=this.verseGroupSize*this.verseGroupIndex;
                 const lastVerseIndex=this.verseGroupSize*(this.verseGroupIndex+1);
                 const languages=['english','copticEnglish','arabic'];
-                return languages.map(lang=>({lang,verses:this.currentHymn[lang].slice(startingVerseIndex,lastVerseIndex)}))
+                return languages.map(lang=>({lang,
+                    verses:this.currentHymn[lang].slice(startingVerseIndex,lastVerseIndex),
+                    startingVerseIndex
+                }))
             },
             fontSizeWithRem(){
                 return `${this.fontSize}rem`
+            },
+            currentHymnTotalGroups(){
+                return Math.ceil(this.currentHymn.english.length/this.verseGroupSize)
             }
         },
         methods:{
             incrementverseGroup(){
-                this.isMenuOpen=false;
-                if((this.verseGroupIndex+1)*this.verseGroupSize>=this.currentHymn.copticEnglish.length){
+                if(this.isMenuOpen){
+                    this.isMenuOpen=false;
+                    return;
+                }
+                if((this.verseGroupIndex+1)*this.verseGroupSize>=this.currentHymn.english.length){
                     this.verseGroupIndex=0;
                     this.hymnIndex++ 
                 }else{
@@ -112,7 +126,10 @@ const adjustHeight=async(_this)=>{
                 }
             },
             decrementverseGroup(){
-                this.isMenuOpen=false;
+                if(this.isMenuOpen){
+                    this.isMenuOpen=false;
+                    return;
+                }
                 if(this.verseGroupIndex===0 &&this.hymnIndex>0){
                     this.hymnIndex--
                 }else if (this.verseGroupIndex===0 &&this.hymnIndex===0){
@@ -150,6 +167,7 @@ const adjustHeight=async(_this)=>{
             updateSelectedHymn(index){
                 this.isMenuOpen=false;
                 this.hymnIndex=index;
+                this.verseGroupIndex=0;
             }
             
         }
@@ -162,9 +180,7 @@ const adjustHeight=async(_this)=>{
 .wrapper{
     max-height: 100%;
 }
-.h-70{
-    min-height: 70vh;
-}
+
 .absolute{
     text-align: center;
     min-width: 100%;
@@ -250,7 +266,12 @@ button{
     z-index:20;
     cursor: pointer;
     overflow-y:scroll;
-
+}
+.header-pos{
+    width: 100%;
+    z-index: -1;
+    color: rgb(236, 59, 59);
+    text-align: center;
 }
 .font-2{
     font-size: 1.5rem;
