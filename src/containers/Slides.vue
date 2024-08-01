@@ -8,7 +8,8 @@
                      :class="isMenuOpen?'menu-icon-rotate me-2':'menu-icon-rotate-reverse'">menu</span>
                      <h1 class="position-absolute header-pos">{{ currentHymn.name }} - ({{ verseGroupIndex+1}}/{{ currentHymnTotalGroups }})</h1>
 
-                <nav class="d-flex justify-content-between p-2 nav-bar position-absolute bg-dark menu-pos" :class="isMenuOpen?'animate__animated animate__fadeInLeft':'animate-fadeInRight'">
+                <nav class="d-flex justify-content-between p-2 nav-bar position-absolute bg-dark menu-pos" 
+                :class="isMenuOpen?'animate__animated animate__fadeInLeft':'animate-fadeInRight'">
                     <div>
                         <div class="position-absolute right">
                             <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
@@ -16,7 +17,7 @@
                         </div>
                         <div>
                         <div class="font-2 px-3" v-for="(hymn,index) in selectedHymns" :key="hymn.name" @click="updateSelectedHymn(index)">
-                            {{ hymn.name }}
+                            <span :class="getHymnLocation(index)">{{ hymn.name }}</span>
                         </div>
                     </div>
                     </div>
@@ -113,6 +114,13 @@ const adjustHeight=async(_this)=>{
             }
         },
         methods:{
+            getHymnLocation(index){
+                if(index<this.hymnIndex){
+                    return 'text-danger'
+                }else if (index === this.hymnIndex){
+                    return 'text-warning'
+                }
+            },
             incrementverseGroup(){
                 if(this.isMenuOpen){
                     this.isMenuOpen=false;
