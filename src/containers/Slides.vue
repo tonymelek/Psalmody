@@ -24,12 +24,12 @@
               </nav>
             </div>
                
-            <div class="row">
+            <div class="row" >
         
                 <div v-for="(verse,index) in currentVerses[0].verses" class="row" :class="(currentVerses[0].startingVerseIndex+index)%2===0?'bahari':'quibli'" >
                 <div v-for="(verseGroup,langIndex) in currentVerses" 
                 class="col my-4 pre-wrap"
-                 :class="verseGroup.lang==='arabic'?'arabic':''" >
+                 :class="verseGroup.lang==='arabic'?'arabic':''"  >
                     <p :style="{ 'font-size': fontSizeWithRem }">
                         {{ currentVerses[langIndex].verses[index]}}
                     </p>
@@ -43,7 +43,7 @@
        
 
             </div>
-            <div class="absolute h-100">
+            <div class="absolute" :style="{'height':`${scrollHeight-80}px`, 'min-height': '90vh'}">
             <div class="row h-100">
                 <div @click="decrementverseGroup" class="col cursor-pointer"></div>
                 <div @click="incrementverseGroup" class="col cursor-pointer" :class="verseGroupSize*(verseGroupIndex+1)>=currentHymn.length &&'text-danger'"></div>
@@ -55,7 +55,8 @@
 </template>
 
 <script>
-import hymns from '../assets/hymns/new-hymns'
+import hymns from '../assets/hymns/new-hymns';
+import {scrollToTop} from '../utils';
 const waitFor=(timeout)=>new Promise((res)=>{
     setTimeout(()=>{
         res();
@@ -79,7 +80,8 @@ const adjustHeight=async(_this)=>{
             verseGroupIndex:0,
             hymnIndex:0,
             fontSize:1.5,
-            isMenuOpen:false
+            isMenuOpen:false,
+            scrollHeight:550
         }),
         mounted(){
             document.querySelector('body').setAttribute('style','background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
@@ -121,7 +123,8 @@ const adjustHeight=async(_this)=>{
                     return 'text-warning'
                 }
             },
-            incrementverseGroup(){
+            async incrementverseGroup(){
+                scrollToTop();
                 if(this.isMenuOpen){
                     this.isMenuOpen=false;
                     return;
@@ -132,8 +135,11 @@ const adjustHeight=async(_this)=>{
                 }else{
                     this.verseGroupIndex++
                 }
+                await waitFor(100)
+                this.scrollHeight=document.body.scrollHeight
             },
             decrementverseGroup(){
+                scrollToTop();
                 if(this.isMenuOpen){
                     this.isMenuOpen=false;
                     return;
