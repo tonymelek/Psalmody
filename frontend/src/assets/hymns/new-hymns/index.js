@@ -31,6 +31,7 @@ import Amen_Keryalison from './Amen_Keryalison.json'
 import Doxology_Mary from './Doxology_Mary.json'
 import Doxology_Michael from './Doxology_Michael.json';
 import Your_Mercies from './Your_Mercies.json';
+import Creed from './Creed.json';
 
 export default [
 Ten_Thino,
@@ -65,5 +66,6 @@ Theotoky_part_14,
 Theotoky_part_15,
 Who_Among_gods,
 Your_Mercies,
+Creed,
 Amen_Keryalison
 ];

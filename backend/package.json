@@ -1,0 +1,14 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+      "start": "node server"
+    },
+    "dependencies": {
+      "axios": "^0.21.1",
+      "dom-parser": "^0.1.6",
+      "express": "^4.17.1"
+    }
+  }
