@@ -26,12 +26,17 @@ import Theotoky_part_12 from './Theotoky_part_12.json';
 import Theotoky_part_13 from './Theotoky_part_13.json';
 import Theotoky_part_14 from './Theotoky_part_14.json';
 import Theotoky_part_15 from './Theotoky_part_15.json';
-import Who_Among_gods from './Who_Among_gods.json';
+import Theotoky_part_16 from './Theotoky_part_16.json';
+import Theotoky_part_17 from './Theotoky_part_17.json';
+import Theotoky_part_18 from './Theotoky_part_18.json';
 import Amen_Keryalison from './Amen_Keryalison.json'
 import Doxology_Mary from './Doxology_Mary.json'
 import Doxology_Michael from './Doxology_Michael.json';
 import Your_Mercies from './Your_Mercies.json';
+import CreedIntro from './CreedIntro.json';
 import Creed from './Creed.json';
+import DoxologyConclusion from './Doxology_Conclusion.json'
+import Doxology_Anthony from './Doxology_Anthony.json';
 
 export default [
 Ten_Thino,
@@ -45,6 +50,8 @@ Ten_Oweeh_Enthok,
 Comemoration,
 Doxology_Mary,
 Doxology_Michael,
+Doxology_Anthony,
+DoxologyConclusion,
 Fourth_Hoos,
 Aynahti,
 Aykoti,
@@ -64,8 +71,11 @@ Theotoky_part_12,
 Theotoky_part_13,
 Theotoky_part_14,
 Theotoky_part_15,
-Who_Among_gods,
+Theotoky_part_16,
+Theotoky_part_17,
+Theotoky_part_18,
 Your_Mercies,
+CreedIntro,
 Creed,
 Amen_Keryalison
 ];
