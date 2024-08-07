@@ -37,9 +37,11 @@ import CreedIntro from './CreedIntro.json';
 import Creed from './Creed.json';
 import DoxologyConclusion from './Doxology_Conclusion.json'
 import Doxology_Anthony from './Doxology_Anthony.json';
+import Tennav from './Tennav.json';
 
 export default [
 Ten_Thino,
+Tennav,
 First_Hoos,
 Lobsh_of_First_Hoos,
 Second_Hoos,

@@ -2,6 +2,7 @@
 const express = require('express');
 const DomParser = require('dom-parser');
 const axios = require('axios');
+const fs=require('fs');
 
 //Variables
 PORT = process.env.PORT || 5000
@@ -19,6 +20,7 @@ app.get('/api/psalmody', (req, res) => {
     axios(`https://tasbeha.org/hymn_library/view/${item}`)
         .then(result => {
             const doc = parser.parseFromString(result.data)
+            const title=doc.getElementsByTagName('h1')[0].textContent.split(' :')[0].replace(/the hymn of (the )?/ig,'')
 
             const output = {};
             for (let index = 0; index < lang.length; index++) {
@@ -37,8 +39,12 @@ app.get('/api/psalmody', (req, res) => {
                     output[lang[index].replace(/text.*/,'')] = text
                 }
             }
-
-            res.send(output)
+            if(output.copticEnglish[0]===null){
+                output.english=output.copticEnglish;
+                output.copticEnglish=[];
+            }
+            fs.writeFileSync(`./psalmody/${title}.json`,JSON.stringify({name:title,...output},null,2))
+            res.send({name:title,...output})
         })
         .catch(err => {
             console.log(err);
