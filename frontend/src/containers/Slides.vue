@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import hymns from '../assets/hymns/new-hymns';
+import hymns from '../assets/hymns/indexedHymns';
 import {scrollToTop} from '../utils';
 const waitFor=(timeout)=>new Promise((res)=>{
     setTimeout(()=>{

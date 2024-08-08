@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import hymns from '../assets/hymns/new-hymns'
+import hymns from '../assets/hymns/indexedHymns'
 export default {
     name: 'sunday-midnight',
     data: () => ({
