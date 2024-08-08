@@ -3,6 +3,7 @@ const express = require('express');
 const DomParser = require('dom-parser');
 const axios = require('axios');
 const fs=require('fs');
+const {copticTextToEnglish} =require('./copticToEnglish');
 
 //Variables
 PORT = process.env.PORT || 5000
@@ -15,7 +16,7 @@ const parser = new DomParser();
 
 app.get('/api/psalmody', (req, res) => {
     // Lang ='english' or 'arabic' or 'coptic'
-    let { lang, item } = req.query
+    let { lang, item ,dirPath,index} = req.query
     lang = lang === 'all' || !lang ? ['englishtext', 'arabictext','coptictext_utf8'] : [lang]
     axios(`https://tasbeha.org/hymn_library/view/${item}`)
         .then(result => {
@@ -39,11 +40,12 @@ app.get('/api/psalmody', (req, res) => {
                     output[lang[index].replace(/text.*/,'')] = text
                 }
             }
-            if(output.copticEnglish[0]===null){
+            
+            if(!output.copticEnglish[0]){
                 output.english=output.copticEnglish;
-                output.copticEnglish=[];
+                output.copticEnglish=copticTextToEnglish(output.coptic);
             }
-            fs.writeFileSync(`./psalmody/${title}.json`,JSON.stringify({name:title,...output},null,2))
+            fs.writeFileSync(`.${dirPath}/${index}-${title.trim().toLowerCase().replace(/(\s|-)+/g,'-')}.json`,JSON.stringify({name:title,...output},null,2))
             res.send({name:title,...output})
         })
         .catch(err => {
@@ -51,27 +53,6 @@ app.get('/api/psalmody', (req, res) => {
             res.send(err)
         })
 })
-app.get('/api/exchange-rates-australia', (req, res) => {
-    axios('https://www.anz.com/aus/RateFee/fxrates/fxpopup.asp')
-        .then(result => {
-            const doc = parser.parseFromString(result.data)
-            const table = [...doc.getElementsByClassName('OddRow'), ...doc.getElementsByClassName('EvenRow')]
-            const dataObject = table.map(row => {
-                const cells = row.childNodes.filter(v => !v.text)
-                return {
-                    currency: cells[2].textContent,
-                    buy: Math.round(1 / cells[5].textContent.split(';')[1] * 100) / 100,
-                    sell: Math.round(1 / cells[8].textContent.split(';')[1] * 100) / 100,
-                }
-            })
-
-            res.send(dataObject.filter(v => v.buy))
-        }).catch(err => {
-            res.send(err)
-        })
-})
-
-
 
 //Listen at Port
 app.listen(PORT, () => console.log(`Express server up and running on port ${PORT}`));

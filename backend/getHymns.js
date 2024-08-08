@@ -1,7 +1,6 @@
 const hymns=[
     "92",
     "104",
-    "2539",
     "103",
     "105",
     "106",
@@ -31,9 +30,13 @@ const hymns=[
     "2716"
 ];
 const axios=require('axios');
-for(const item of hymns){
-    axios.get(`http://localhost:5000/api/psalmody?item=${item}`)
-}
+const dirPath='/psalmody';
+hymns.forEach((hymn,index)=>{
+    const missingZeros=1-Math.floor(Math.log10(index+1));
+    const paddedIndex=`${'0'.repeat(missingZeros)}${index+1}`;
+    axios.get(`http://localhost:5000/api/psalmody?item=${hymn}&dirPath=${dirPath}&index=${paddedIndex}`)
+})
+
 
 // getting hymn item numbers
 // x=[];document.querySelectorAll('li').forEach(li=>x.push(li.querySelector('a').href));
