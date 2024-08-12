@@ -24,9 +24,12 @@ function convertToYaml(jsonData) {
   return yaml.dump(yamlData);
 }
 
-
+const allCoptic=[];
 for(file of files){
     const json=require(`./psalmody/${file}`)
-    const yamlData=convertToYaml(json)
-    fs.writeFileSync(`./psalmody/yaml/${file.replace(/\.json$/,'.yml')}`,yamlData)
+    // const yamlData=convertToYaml(json)
+    // fs.writeFileSync(`./psalmody/yaml/${file.replace(/\.json$/,'.yml')}`,yamlData)
+    allCoptic.push(...json.coptic)
 }
+const wordsSet =new Set(allCoptic.join(' ').replace(/(\n+|:|\t|\(|\)|\/)/g,' ').replace(/\.+/g,'').split(' ').filter(w=>w.length>1))
+fs.writeFileSync('./copticWords.json', JSON.stringify(Array.from(wordsSet).sort(),null,2))

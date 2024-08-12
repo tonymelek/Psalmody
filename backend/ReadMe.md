@@ -30,3 +30,9 @@ curl -X GET http://localhost:5000/psalmody?item=<number>&dirpath=<dirPath>&index
 - Follow the API documentation for specific details on request and response formats.
 
 Feel free to reach out to the service provider for any further assistance or troubleshooting.
+
+
+
+Python
+pip install -r requirements.txt
+python app.py
