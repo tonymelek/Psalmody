@@ -68,14 +68,16 @@
             <h3 class="text-danger text-center pt-5" :id="hymn.name">{{ hymn.name }}</h3>
             <div v-for="verse in hymn.english.length" class="container verses">
                 <div class="row my-3 " :class="{ 'text-primary': verse % 2 === 0 }">
-                    <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('english')">
+                    <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }"
+                        v-show="showLang('english')">
                         {{ hymn.english[verse - 1] }}
                     </div>
-                    <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }" v-show="showLang('copticEnglish')">
+                    <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }"
+                        v-show="showLang('copticEnglish')">
                         {{ hymn.copticEnglish[verse - 1] }}</div>
                     <div class="arabic pre-wrap" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
                         v-show="showLang('arabic')">
-                        {{ hymn.arabic[verse-1] }}
+                        {{ hymn.arabic[verse - 1] }}
                     </div>
 
                 </div>
@@ -87,9 +89,8 @@
 <script>
 import hymns from '../assets/hymns/indexedHymns'
 export default {
-    name: 'sunday-midnight',
+    name: 'portrait-view',
     data: () => ({
-        count: 4,
         toggler_1: true,
         hymns,
         langs: ["english", "copticEnglish", "arabic"],
@@ -98,8 +99,8 @@ export default {
         fontSize: 1
     }),
     methods: {
-        changeFontSize(step){
-            this.fontSize+=step
+        changeFontSize(step) {
+            this.fontSize += step
         },
         toggle(type, value) {
             switch (type) {
@@ -144,7 +145,7 @@ export default {
         }
     },
     mounted() {
-        if(window.innerHeight<window.innerWidth) this.$router.push('/slides')
+        document.querySelector('body').setAttribute('style', '');
     },
     computed: {
         langsCount() {
@@ -164,11 +165,12 @@ export default {
 </script>
 
 <style scoped>
-.bigger{
+.bigger {
     font-weight: bolder;
     font-size: 2rem;
 }
-.font-border{
+
+.font-border {
     border: 1px solid black;
     border-radius: 2px;
     line-height: 2rem;

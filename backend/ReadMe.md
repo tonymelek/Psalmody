@@ -22,7 +22,7 @@ This README file contains instructions on how to use the Psalmody endpoint for i
 ## Sample Usage
 ### Get hymn data
 ```bash
-curl -X GET http://localhost:5000/psalmody?item=<number>&dirpath=<dirPath>&index=<index>
+curl -X GET http://localhost:5000/psalmody?item=${number}&dirpath=${dirPath}&index=${index}
 ```
 
 ## Additional Notes

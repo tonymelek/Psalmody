@@ -1,11 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Sunday from '../src/containers/Sunday.vue';
-import Slides from '../src/containers/Slides.vue';
+import Home from './containers/Home.vue';
 
 
 const routes = [
-    { path: '/', component: Sunday },
-    { path: '/slides', component: Slides },
+    {
+        path: '/',
+        name: 'Home',
+        component: Home
+      }
+
 ]
 
 export const router = createRouter({
