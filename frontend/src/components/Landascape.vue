@@ -108,6 +108,7 @@ export default {
             return regex.test(hymnName)
         })
         this.hymnIndex=preSelectedIndex!==-1?preSelectedIndex:0;
+        console.log(hymns.map(hymn=>`<url><loc>https://coptic-psalmody.web.app/${hymn.name.toLowerCase().replace(/(\s+|-)/g,'_')}</loc><lastmod>${new Date().toISOString()}</lastmod></url>`).join('\n'));
     },
     watch: {
         currentHymn: {
