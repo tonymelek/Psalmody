@@ -37,6 +37,7 @@ export default {
             }
         }
         window.addEventListener('resize', handleResize)
+        handleResize();
     }
 }
 </script>
