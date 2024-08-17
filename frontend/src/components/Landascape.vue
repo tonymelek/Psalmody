@@ -15,8 +15,7 @@
                 </div>
             </nav>
             <nav class="position-absolute nav-bar bg-dark settings-pos"
-            :class="isSettingsOpen ? 'animate__animated animate__fadeInRight' : 'animate-fadeOutUpFast'"
-            >
+                :class="isSettingsOpen ? 'animate__animated animate__fadeInRight' : 'animate-fadeOutUpFast'">
                 <div class="d-flex justify-content-center py-2">
                     <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
                     <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
@@ -27,7 +26,8 @@
                     class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2"
                     :class="isMenuOpen ? 'menu-icon-rotate me-2' : 'menu-icon-rotate-reverse'">menu</span>
                 <span @click.prevent="toggleSettings"
-                    class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2">{{ isSettingsOpen ? 'close' : 'settings' }}</span>
+                    class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2">{{ isSettingsOpen
+                        ? 'close' : 'settings' }}</span>
 
 
             </div>
@@ -36,18 +36,17 @@
 
                 <div v-for="(verse, index) in currentVerses[0].verses" class="row"
                     :class="(currentVerses[0].startingVerseIndex + index) % 2 === 0 ? 'bahari' : 'quibli'">
-                    <div v-for="(verseGroup, langIndex) in currentVerses" class="col my-4 pre-wrap"
-                        :class="verseGroup.lang === 'arabic' ? 'arabic' : ''">
-                        <p :style="{ 'font-size': fontSizeWithRem }">
-                            {{ currentVerses[langIndex].verses[index] }}
-                        </p>
+                    <div class="row" v-for="(_, subIndex) in Array(currentVerses[0].verses[0].length)">
+                        <div v-for="(verseGroup, langIndex) in currentVerses" class="col my-4 pre-wrap"
+                            :class="verseGroup.lang === 'arabic' ? 'arabic' : ''">
+                            <p :style="{ 'font-size': fontSizeWithRem }">
+                                {{ currentVerses[langIndex].verses[index][subIndex] }}
+                            </p>
+                        </div>
                     </div>
                 </div>
-
             </div>
-            <div>
 
-            </div>
 
 
         </div>
@@ -83,11 +82,11 @@ const adjustHeight = async (_this) => {
 }
 export default {
     name: 'landscape-view',
-    props:{
-        hymn:{
-            type:String,
-            required:false,
-            default:'ten_thino'
+    props: {
+        hymn: {
+            type: String,
+            required: false,
+            default: 'ten_thino'
         }
     },
     data: () => ({
@@ -102,13 +101,12 @@ export default {
     }),
     mounted() {
         document.querySelector('body').setAttribute('style', 'background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
-        const preSelectedIndex= hymns.findIndex(hymn=>{
-            const regex= new RegExp(this.hymn,'i');
-            const hymnName=hymn.name.replace(/(\s+|-)/g,'_');
+        const preSelectedIndex = hymns.findIndex(hymn => {
+            const regex = new RegExp(this.hymn, 'i');
+            const hymnName = hymn.name.replace(/(\s+|-)/g, '_');
             return regex.test(hymnName)
         })
-        this.hymnIndex=preSelectedIndex!==-1?preSelectedIndex:0;
-        console.log(hymns.map(hymn=>`<url><loc>https://coptic-psalmody.web.app/${hymn.name.toLowerCase().replace(/(\s+|-)/g,'_')}</loc><lastmod>${new Date().toISOString()}</lastmod></url>`).join('\n'));
+        this.hymnIndex = preSelectedIndex !== -1 ? preSelectedIndex : 0;
     },
     watch: {
         currentHymn: {
@@ -116,7 +114,7 @@ export default {
                 await adjustHeight(this);
             }
         }
-        },
+    },
     computed: {
         currentHymn() {
             return this.selectedHymns[this.hymnIndex]
@@ -127,7 +125,7 @@ export default {
             const languages = ['english', 'copticEnglish', 'arabic'];
             return languages.map(lang => ({
                 lang,
-                verses: this.currentHymn[lang].slice(startingVerseIndex, lastVerseIndex),
+                verses: this.currentHymn[lang].slice(startingVerseIndex, lastVerseIndex).map(v => v.split(/\n+/)),
                 startingVerseIndex
             }))
         },
@@ -148,9 +146,9 @@ export default {
         },
         async incrementverseGroup() {
             scrollToTop();
-            if (this.isMenuOpen|| this.isSettingsOpen) {
+            if (this.isMenuOpen || this.isSettingsOpen) {
                 this.isMenuOpen = false;
-                this.isSettingsOpen=false;
+                this.isSettingsOpen = false;
                 return;
             }
             if ((this.verseGroupIndex + 1) * this.verseGroupSize >= this.currentHymn.english.length) {
@@ -164,9 +162,9 @@ export default {
         },
         decrementverseGroup() {
             scrollToTop();
-            if (this.isMenuOpen|| this.isSettingsOpen) {
+            if (this.isMenuOpen || this.isSettingsOpen) {
                 this.isMenuOpen = false;
-                this.isSettingsOpen=false;
+                this.isSettingsOpen = false;
                 return;
             }
             if (this.verseGroupIndex === 0 && this.hymnIndex > 0) {
@@ -318,7 +316,8 @@ button {
 .animate-fadeOutUpSlow {
     animation: animate__fadeOutUp 1s linear forwards;
 }
-.animate-fadeOutUpFast{
+
+.animate-fadeOutUpFast {
     animation: animate__fadeOutUp .5s linear forwards;
 }
 
@@ -334,7 +333,7 @@ button {
 
 .settings-pos {
     right: 15px;
-    top:65px;
+    top: 65px;
     width: 180px;
     height: 75px;
     z-index: 20;
