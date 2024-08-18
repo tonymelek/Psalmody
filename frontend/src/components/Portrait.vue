@@ -66,20 +66,22 @@
         </div>
         <div v-for="hymn in selectedHymns" :class="{ 'd-none': langsCount === 0 }">
             <h3 class="text-danger text-center pt-5" :id="hymn.name">{{ hymn.name }}</h3>
-            <div v-for="verse in hymn.english.length" class="container verses">
-                <div class="row my-3 " :class="{ 'text-primary': verse % 2 === 0 }">
-                    <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }"
-                        v-show="showLang('english')">
-                        {{ hymn.english[verse - 1] }}
+            <div v-for="(_,verseIndex) in Array(hymn.english.length)" class="container verses">
+                <div class="row my-3 " :class="{ 'text-primary': verseIndex % 2 === 0 }">
+                    <div v-for="(_,subIndex) in hymn.english[0].split(/\n+/)" class="row">
+                        <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }"
+                            v-show="showLang('english')">
+                            {{ hymn.english[verseIndex].split(/\n+/)[subIndex] }}
+                        </div>
+                      
+                        <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }"
+                            v-show="showLang('copticEnglish')">
+                            {{ hymn.copticEnglish[verseIndex]?.split(/\n+/)?.[subIndex] }}</div> 
+                        <div class="arabic pre-wrap" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
+                            v-show="showLang('arabic')">
+                            {{ hymn.arabic[verseIndex].split(/\n+/)[subIndex] }}
+                        </div>
                     </div>
-                    <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }"
-                        v-show="showLang('copticEnglish')">
-                        {{ hymn.copticEnglish[verse - 1] }}</div>
-                    <div class="arabic pre-wrap" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
-                        v-show="showLang('arabic')">
-                        {{ hymn.arabic[verse - 1] }}
-                    </div>
-
                 </div>
             </div>
         </div>
