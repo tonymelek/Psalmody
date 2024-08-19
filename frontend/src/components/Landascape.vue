@@ -3,7 +3,9 @@
         <div class="container position-relative">
             <h1 class="position-absolute header-pos">{{ currentHymn.name }} - ({{ verseGroupIndex + 1 }}/{{
                 currentHymnTotalGroups }})</h1>
-            <nav class="d-flex justify-content-between p-2 nav-bar position-absolute bg-dark menu-pos"
+
+            <!-- hymns menu -->
+            <nav ref="hymnsMenu" class=" justify-content-between p-2 nav-bar position-absolute bg-dark menu-pos"
                 :class="isMenuOpen ? 'animate__animated animate__fadeInLeft' : 'animate-fadeOutUpSlow'">
                 <div>
                     <div>
@@ -14,47 +16,44 @@
                     </div>
                 </div>
             </nav>
-            <nav class="position-absolute nav-bar bg-dark settings-pos"
+            <!-- settings menu -->
+            <nav ref="settingsMenu"  class="position-absolute nav-bar bg-dark settings-pos"
                 :class="isSettingsOpen ? 'animate__animated animate__fadeInRight' : 'animate-fadeOutUpFast'">
                 <div class="d-flex justify-content-center py-2">
                     <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
                     <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
                 </div>
             </nav>
-            <div class="d-flex justify-content-between align-items-start mt-1 ">
+
+            <header class="d-flex justify-content-between align-items-start mt-1 ">
                 <span @click.prevent="toggleMenu"
                     class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2"
                     :class="isMenuOpen ? 'menu-icon-rotate me-2' : 'menu-icon-rotate-reverse'">menu</span>
                 <span @click.prevent="toggleSettings"
                     class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2">{{ isSettingsOpen
                         ? 'close' : 'settings' }}</span>
-
-
-            </div>
-
-            <div class="row">
-
-                <div v-for="(verse, index) in currentVerses[0].verses" class="row"
-                    :class="(currentVerses[0].startingVerseIndex + index) % 2 === 0 ? 'bahari' : 'quibli'">
-                    <div class="row" v-for="(_, subIndex) in Array(currentVerses[0].verses[0].length)">
-                        <div v-for="(verseGroup, langIndex) in currentVerses" class="col my-4 pre-wrap"
-                            :class="verseGroup.lang === 'arabic' ? 'arabic' : ''">
+            </header>
+            <main class="row">
+                <div v-for="(_, index) in currentVerses.english" class="row"
+                    :class="(currentVerses.startingVerseIndex + index) % 2 === 0 ? 'bahari' : 'quibli'">
+                    <div class="row" v-for="(_, subIndex) in Array(currentVerses.english[0].length)">
+                        <div v-for="lang in selectedLangs" class="col mt-4"
+                            :class="lang === 'arabic' ? 'arabic' : ''">
                             <p :style="{ 'font-size': fontSizeWithRem }">
-                                {{ currentVerses[langIndex].verses[index][subIndex] }}
+                                {{ currentVerses[lang][index][subIndex] }}
                             </p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-
+            </main>
         </div>
+        <!-- container end -->
+
+
         <div class="absolute" :style="{ 'height': `${scrollHeight - 80}px`, 'min-height': '90vh' }">
             <div class="row h-100">
                 <div @click="decrementverseGroup" class="col cursor-pointer"></div>
-                <div @click="incrementverseGroup" class="col cursor-pointer"
-                    :class="verseGroupSize * (verseGroupIndex + 1) >= currentHymn.length && 'text-danger'"></div>
+                <div @click="incrementverseGroup" class="col cursor-pointer"></div>
             </div>
         </div>
 
@@ -64,7 +63,7 @@
 
 <script>
 import hymns from '../assets/hymns/indexedHymns';
-import { scrollToTop } from '../utils';
+import { scrollToTop,getPreselectedHymnIndex } from '../utils';
 const waitFor = (timeout) => new Promise((res) => {
     setTimeout(() => {
         res();
@@ -91,22 +90,20 @@ export default {
     },
     data: () => ({
         selectedHymns: hymns,
-        verseGroupSize: 2,
+        verseGroupSize: 1,
         verseGroupIndex: 0,
         hymnIndex: 0,
         fontSize: 1.5,
         isMenuOpen: false,
         isSettingsOpen: false,
-        scrollHeight: 550
+        scrollHeight: 550,
+        selectedLangs:['english', 'copticEnglish', 'arabic']
     }),
     mounted() {
         document.querySelector('body').setAttribute('style', 'background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
-        const preSelectedIndex = hymns.findIndex(hymn => {
-            const regex = new RegExp(this.hymn, 'i');
-            const hymnName = hymn.name.replace(/(\s+|-)/g, '_');
-            return regex.test(hymnName)
-        })
-        this.hymnIndex = preSelectedIndex !== -1 ? preSelectedIndex : 0;
+        this.hymnIndex = getPreselectedHymnIndex(hymns, this.hymn);
+        this.$refs.hymnsMenu.style.display='none';
+        this.$refs.settingsMenu.style.display='none';
     },
     watch: {
         currentHymn: {
@@ -122,12 +119,14 @@ export default {
         currentVerses() {
             const startingVerseIndex = this.verseGroupSize * this.verseGroupIndex;
             const lastVerseIndex = this.verseGroupSize * (this.verseGroupIndex + 1);
-            const languages = ['english', 'copticEnglish', 'arabic'];
-            return languages.map(lang => ({
-                lang,
-                verses: this.currentHymn[lang].slice(startingVerseIndex, lastVerseIndex).map(v => v.split(/\n+/)),
-                startingVerseIndex
-            }))
+            const verses={
+                startingVerseIndex,
+                english:[],
+                copticEnglish:[],
+                arabic:[]
+            }
+            this.selectedLangs.forEach(lang => verses[lang]=this.currentHymn[lang].slice(startingVerseIndex, lastVerseIndex).map(v => v.split(/\n+/)))
+            return verses;
         },
         fontSizeWithRem() {
             return `${this.fontSize}rem`
@@ -199,9 +198,11 @@ export default {
             if (this.verseGroupIndex === 0) await adjustHeight(this);
         },
         toggleMenu() {
+            this.$refs.hymnsMenu.style.display='flex';
             this.isMenuOpen = !this.isMenuOpen;
         },
         toggleSettings() {
+            this.$refs.settingsMenu.style.display='block';
             this.isSettingsOpen = !this.isSettingsOpen;
         },
         updateSelectedHymn(index) {
