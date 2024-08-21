@@ -17,7 +17,6 @@
             <div v-show="showMenu">
                 <div class="d-flex justify-content-around pt-2  bg-light animate__animated animate__fadeInDown">
                     <div class="d-flex align-items-center ">
-
                         <label class="switch">
                             <input type="checkbox" value="english" class="mx-2" v-model="langs">
                             <span class="slider round"></span>

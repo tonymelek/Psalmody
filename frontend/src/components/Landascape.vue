@@ -23,6 +23,15 @@
                     <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
                     <button @click.prevent="changeFontSize('+')" class="bigger">A</button>
                 </div>
+                <div class="px-2">
+                    <div v-for="lang in langs" class="d-flex align-items-center ">
+                        <label class="switch">
+                            <input type="checkbox" :value="lang" class="mx-2" v-model="selectedLangs" :disabled="selectedLangs.length===1 && selectedLangs.includes(lang)">
+                            <span class="slider round"></span>
+                        </label>
+                        <div class="mx-2">{{ lang }}</div>
+                    </div>
+                </div>
             </nav>
 
             <header class="d-flex justify-content-between align-items-start mt-1 ">
@@ -34,10 +43,10 @@
                         ? 'close' : 'settings' }}</span>
             </header>
             <main class="row">
-                <div v-for="(_, index) in currentVerses.english" class="row"
+                <div v-for="(_, index) in currentVerses[selectedLangs[0]]" class="row"
                     :class="(currentVerses.startingVerseIndex + index) % 2 === 0 ? 'bahari' : 'quibli'">
-                    <div class="row" v-for="(_, subIndex) in Array(currentVerses.english[0].length)">
-                        <div v-for="lang in selectedLangs" class="col mt-4"
+                    <div class="row" v-for="(_, subIndex) in Array(currentVerses[selectedLangs[0]][0].length)">
+                        <div v-for="lang in selectedLangs.sort((a,b)=>a>b?-1:1)" class="col mt-4"
                             :class="lang === 'arabic' ? 'arabic' : ''">
                             <p :style="{ 'font-size': fontSizeWithRem }">
                                 {{ currentVerses[lang][index][subIndex] }}
@@ -64,6 +73,7 @@
 <script>
 import hymns from '../assets/hymns/indexedHymns';
 import { scrollToTop,getPreselectedHymnIndex } from '../utils';
+import {langs} from '../constants';
 const waitFor = (timeout) => new Promise((res) => {
     setTimeout(() => {
         res();
@@ -97,7 +107,8 @@ export default {
         isMenuOpen: false,
         isSettingsOpen: false,
         scrollHeight: 550,
-        selectedLangs:['english', 'copticEnglish', 'arabic']
+        selectedLangs:langs,
+        langs
     }),
     mounted() {
         document.querySelector('body').setAttribute('style', 'background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
@@ -114,6 +125,12 @@ export default {
     },
     computed: {
         currentHymn() {
+            if(this.selectedHymns[this.hymnIndex].coptic){
+                this.langs=langs;
+            }else{
+                this.langs=['english', 'copticEnglish', 'arabic'];
+            }
+            this.selectedLangs=this.langs;
             return this.selectedHymns[this.hymnIndex]
         },
         currentVerses() {
@@ -123,7 +140,8 @@ export default {
                 startingVerseIndex,
                 english:[],
                 copticEnglish:[],
-                arabic:[]
+                arabic:[],
+                coptic:[]
             }
             this.selectedLangs.forEach(lang => verses[lang]=this.currentHymn[lang].slice(startingVerseIndex, lastVerseIndex).map(v => v.split(/\n+/)))
             return verses;
@@ -336,7 +354,7 @@ button {
     right: 15px;
     top: 65px;
     width: 180px;
-    height: 75px;
+    height: 180px;
     z-index: 20;
     cursor: pointer;
 }
