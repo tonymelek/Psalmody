@@ -17,7 +17,7 @@
                 </div>
             </nav>
             <!-- settings menu -->
-            <nav ref="settingsMenu"  class="position-absolute nav-bar bg-dark settings-pos"
+            <nav ref="settingsMenu" class="position-absolute nav-bar bg-dark settings-pos"
                 :class="isSettingsOpen ? 'animate__animated animate__fadeInRight' : 'animate-fadeOutUpFast'">
                 <div class="d-flex justify-content-center py-2">
                     <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
@@ -26,7 +26,8 @@
                 <div class="px-2">
                     <div v-for="lang in langs" class="d-flex align-items-center ">
                         <label class="switch">
-                            <input type="checkbox" :value="lang" class="mx-2" v-model="selectedLangs" :disabled="selectedLangs.length===1 && selectedLangs.includes(lang)">
+                            <input type="checkbox" :value="lang" class="mx-2" v-model="selectedLangs"
+                                :disabled="selectedLangs.length === 1 && selectedLangs.includes(lang)">
                             <span class="slider round"></span>
                         </label>
                         <div class="mx-2">{{ lang }}</div>
@@ -39,17 +40,18 @@
                     class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2"
                     :class="isMenuOpen ? 'menu-icon-rotate me-2' : 'menu-icon-rotate-reverse'">menu</span>
                 <span @click.prevent="toggleSettings"
-                    class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2">{{ isSettingsOpen
-                        ? 'close' : 'settings' }}</span>
+                    class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2">{{
+                isSettingsOpen
+                    ? 'close' : 'settings' }}</span>
             </header>
             <main class="row">
                 <div v-for="(_, index) in currentVerses[selectedLangs[0]]" class="row"
                     :class="(currentVerses.startingVerseIndex + index) % 2 === 0 ? 'bahari' : 'quibli'">
                     <div class="row" v-for="(_, subIndex) in Array(currentVerses[selectedLangs[0]][0].length)">
-                        <div v-for="lang in selectedLangs.sort((a,b)=>a>b?-1:1)" class="col mt-4"
+                        <div v-for="lang in selectedLangs.sort((a, b) => a > b ? -1 : 1)" class="col mt-4"
                             :class="lang === 'arabic' ? 'arabic' : ''">
                             <p :style="{ 'font-size': fontSizeWithRem }">
-                                {{ currentVerses[lang][index][subIndex] }}
+                                {{ currentVerses?.[lang]?.[index]?.[subIndex] }}
                             </p>
                         </div>
                     </div>
@@ -72,8 +74,8 @@
 
 <script>
 import hymns from '../assets/hymns/indexedHymns';
-import { scrollToTop,getPreselectedHymnIndex } from '../utils';
-import {langs} from '../constants';
+import { scrollToTop, getPreselectedHymnIndex } from '../utils';
+import { langs } from '../constants';
 const waitFor = (timeout) => new Promise((res) => {
     setTimeout(() => {
         res();
@@ -107,43 +109,38 @@ export default {
         isMenuOpen: false,
         isSettingsOpen: false,
         scrollHeight: 550,
-        selectedLangs:langs,
+        selectedLangs: langs,
         langs
     }),
     mounted() {
         document.querySelector('body').setAttribute('style', 'background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
         this.hymnIndex = getPreselectedHymnIndex(hymns, this.hymn);
-        this.$refs.hymnsMenu.style.display='none';
-        this.$refs.settingsMenu.style.display='none';
+        this.$refs.hymnsMenu.style.display = 'none';
+        this.$refs.settingsMenu.style.display = 'none';
     },
     watch: {
-        currentHymn: {
+        hymnIndex: {
             async handler() {
                 await adjustHeight(this);
+                const availableLangs = Object.keys(this.selectedHymns[this.hymnIndex]).filter(v => v != 'name');
+                this.langs = availableLangs;
+                const selectedLangs = [...this.selectedLangs].filter(v => availableLangs.includes(v));
+                this.selectedLangs = selectedLangs;
             }
         }
     },
     computed: {
         currentHymn() {
-            if(this.selectedHymns[this.hymnIndex].coptic){
-                this.langs=langs;
-            }else{
-                this.langs=['english', 'copticEnglish', 'arabic'];
-            }
-            this.selectedLangs=this.langs;
+
             return this.selectedHymns[this.hymnIndex]
         },
         currentVerses() {
             const startingVerseIndex = this.verseGroupSize * this.verseGroupIndex;
             const lastVerseIndex = this.verseGroupSize * (this.verseGroupIndex + 1);
-            const verses={
-                startingVerseIndex,
-                english:[],
-                copticEnglish:[],
-                arabic:[],
-                coptic:[]
+            const verses = {
+                startingVerseIndex
             }
-            this.selectedLangs.forEach(lang => verses[lang]=this.currentHymn[lang].slice(startingVerseIndex, lastVerseIndex).map(v => v.split(/\n+/)))
+            this.selectedLangs.forEach(lang => verses[lang] = this.currentHymn[lang].slice(startingVerseIndex, lastVerseIndex).map(v => v.split(/\n+/)))
             return verses;
         },
         fontSizeWithRem() {
@@ -168,10 +165,13 @@ export default {
                 this.isSettingsOpen = false;
                 return;
             }
-            if ((this.verseGroupIndex + 1) * this.verseGroupSize >= this.currentHymn.english.length) {
+            if ((this.verseGroupIndex + 1) * this.verseGroupSize >= this.currentHymn.english.length && this.hymnIndex === this.selectedHymns.length-1) {
+                return; //last versegroup in last hymn
+            }else if ((this.verseGroupIndex + 1) * this.verseGroupSize >= this.currentHymn.english.length) {
                 this.verseGroupIndex = 0;
                 this.hymnIndex++
-            } else {
+            }
+            else {
                 this.verseGroupIndex++
             }
             await waitFor(100)
@@ -216,11 +216,11 @@ export default {
             if (this.verseGroupIndex === 0) await adjustHeight(this);
         },
         toggleMenu() {
-            this.$refs.hymnsMenu.style.display='flex';
+            this.$refs.hymnsMenu.style.display = 'flex';
             this.isMenuOpen = !this.isMenuOpen;
         },
         toggleSettings() {
-            this.$refs.settingsMenu.style.display='block';
+            this.$refs.settingsMenu.style.display = 'block';
             this.isSettingsOpen = !this.isSettingsOpen;
         },
         updateSelectedHymn(index) {
