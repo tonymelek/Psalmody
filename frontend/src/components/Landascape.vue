@@ -102,7 +102,7 @@ export default {
     },
     data: () => ({
         selectedHymns: hymns,
-        verseGroupSize: 1,
+        verseGroupSize: 2,
         verseGroupIndex: 0,
         hymnIndex: 0,
         fontSize: 1.5,
