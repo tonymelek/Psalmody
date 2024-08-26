@@ -16,29 +16,13 @@
 
             <div v-show="showMenu">
                 <div class="d-flex justify-content-around pt-2  bg-light animate__animated animate__fadeInDown">
-                    <div class="d-flex align-items-center ">
+                    <div v-for="lang in langs" class="d-flex align-items-center ">
                         <label class="switch">
-                            <input type="checkbox" value="english" class="mx-2" v-model="langs">
+                            <input type="checkbox" :value="lang" class="mx-2" v-model="selectedLangs"
+                                :disabled="selectedLangs.length === 1 && selectedLangs.includes(lang)">
                             <span class="slider round"></span>
                         </label>
-                        <div class="mx-2">English</div>
-                    </div>
-                    <div class="d-flex align-items-center">
-
-                        <label class="switch">
-                            <input type="checkbox" value="copticEnglish" class="mx-2" v-model="langs">
-                            <span class="slider round"></span>
-                        </label>
-                        <div class="mx-2">Coptic English</div>
-                    </div>
-
-                    <div class="d-flex align-items-center">
-
-                        <label class="switch">
-                            <input type="checkbox" value="arabic" class="mx-2" v-model="langs">
-                            <span class="slider round"></span>
-                        </label>
-                        <div class="mx-2">Arabic</div>
+                        <div class="mx-2">{{ lang }}</div>
                     </div>
 
                 </div>
@@ -84,19 +68,21 @@
 
 <script>
 import hymns from '../assets/hymns/indexedHymns'
+import { langs } from '../constants';
 export default {
     name: 'portrait-view',
     data: () => ({
         toggler_1: true,
         hymns,
-        langs: ["english", "copticEnglish", "arabic","coptic"],
+        langs,
+        selectedLangs:langs,
         showMenu: false,
         selectedHymns: hymns,
         fontSize: 1
     }),
     methods: {
         getLangs(hymn){
-            return Object.keys(hymn).filter(v => v != 'name');
+            return Object.keys(hymn).filter(v => v != 'name').filter(v=>[...this.selectedLangs].includes(v))
         },
         changeFontSize(step) {
             this.fontSize += step
