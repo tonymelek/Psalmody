@@ -68,18 +68,13 @@
             <div v-for="(_,verseIndex) in Array(hymn.english.length)" class="container verses">
                 <div class="row my-3 " :class="{ 'text-primary': verseIndex % 2 === 0 }">
                     <div v-for="(_,subIndex) in hymn.english[0].split(/\n+/)" class="row">
-                        <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }"
-                            v-show="showLang('english')">
-                            {{ hymn.english[verseIndex].split(/\n+/)[subIndex] }}
+                        <div v-for="lang in getLangs(hymn).sort((a, b) => a > b ? -1 : 1)" 
+                            class="col" :style="{ 'font-size': fontSizeWithRem }"
+                            :class="lang==='arabic'?'arabic':''"
+                            >
+                            {{ hymn[lang][verseIndex]?.split(/\n+/)[subIndex] }}
                         </div>
-                      
-                        <div :class="colsCount" class="pre-wrap" :style="{ 'font-size': fontSizeWithRem }"
-                            v-show="showLang('copticEnglish')">
-                            {{ hymn.copticEnglish[verseIndex]?.split(/\n+/)?.[subIndex] }}</div> 
-                        <div class="arabic pre-wrap" :class="colsCount" :style="{ 'font-size': fontSizeWithRem }"
-                            v-show="showLang('arabic')">
-                            {{ hymn.arabic[verseIndex].split(/\n+/)[subIndex] }}
-                        </div>
+                 
                     </div>
                 </div>
             </div>
@@ -94,12 +89,15 @@ export default {
     data: () => ({
         toggler_1: true,
         hymns,
-        langs: ["english", "copticEnglish", "arabic"],
+        langs: ["english", "copticEnglish", "arabic","coptic"],
         showMenu: false,
         selectedHymns: hymns,
         fontSize: 1
     }),
     methods: {
+        getLangs(hymn){
+            return Object.keys(hymn).filter(v => v != 'name');
+        },
         changeFontSize(step) {
             this.fontSize += step
         },
@@ -112,9 +110,6 @@ export default {
                     break;
             }
 
-        },
-        showLang(lang) {
-            return this.langs.indexOf(lang) !== -1
         },
         select(type) {
             switch (type) {
@@ -151,9 +146,6 @@ export default {
     computed: {
         langsCount() {
             return this.langs.length
-        },
-        colsCount() {
-            return `col-${12 / this.langsCount}`
         },
         selectAll() {
             return this.selectedHymns.length === 0
