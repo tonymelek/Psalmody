@@ -30,7 +30,7 @@
                                 :disabled="selectedLangs.length === 1 && selectedLangs.includes(lang)">
                             <span class="slider round"></span>
                         </label>
-                        <div class="mx-2">{{ lang }}</div>
+                        <div class="mx-2">{{ covertToSenctenceCase(lang) }}</div>
                     </div>
                 </div>
             </nav>
@@ -74,7 +74,7 @@
 
 <script>
 import hymns from '../assets/hymns/indexedHymns';
-import { scrollToTop, getPreselectedHymnIndex } from '../utils';
+import { scrollToTop, getPreselectedHymnIndex,covertToSenctenceCase } from '../utils';
 import { langs } from '../constants';
 const waitFor = (timeout) => new Promise((res) => {
     setTimeout(() => {
@@ -110,7 +110,8 @@ export default {
         isSettingsOpen: false,
         scrollHeight: 550,
         selectedLangs: langs,
-        langs
+        langs,
+        covertToSenctenceCase
     }),
     mounted() {
         document.querySelector('body').setAttribute('style', 'background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');

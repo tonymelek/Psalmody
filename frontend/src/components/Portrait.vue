@@ -15,14 +15,14 @@
 
 
             <div v-show="showMenu">
-                <div class="d-flex justify-content-around pt-2  bg-light animate__animated animate__fadeInDown">
-                    <div v-for="lang in langs" class="d-flex align-items-center ">
+                <div class="row pt-2  bg-light animate__animated animate__fadeInDown">
+                    <div v-for="lang in langs" class="col d-flex align-items-center ">
                         <label class="switch">
                             <input type="checkbox" :value="lang" class="mx-2" v-model="selectedLangs"
                                 :disabled="selectedLangs.length === 1 && selectedLangs.includes(lang)">
                             <span class="slider round"></span>
                         </label>
-                        <div class="mx-2">{{ lang }}</div>
+                        <div class="mx-2">{{ covertToSenctenceCase(lang) }}</div>
                     </div>
 
                 </div>
@@ -69,6 +69,7 @@
 <script>
 import hymns from '../assets/hymns/indexedHymns'
 import { langs } from '../constants';
+import {covertToSenctenceCase} from '../utils'
 export default {
     name: 'portrait-view',
     data: () => ({
@@ -78,7 +79,8 @@ export default {
         selectedLangs:langs,
         showMenu: false,
         selectedHymns: hymns,
-        fontSize: 1
+        fontSize: 1,
+        covertToSenctenceCase
     }),
     methods: {
         getLangs(hymn){

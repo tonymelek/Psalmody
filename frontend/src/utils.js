@@ -12,3 +12,8 @@ export const getPreselectedHymnIndex = (hymns, queryHymn) => {
     })
     return index === -1 ? 0 : index;
 }
+
+export const covertToSenctenceCase=camelCase=>{
+    const res=camelCase.replace(/[A-Z]/g,l=>` ${l.toUpperCase()}`);
+    return res.charAt(0).toUpperCase()+res.slice(1);
+}
