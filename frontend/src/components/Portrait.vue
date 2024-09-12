@@ -54,7 +54,7 @@
                     <div v-for="(_,subIndex) in hymn.english[0].split(/\n+/)" class="row">
                         <div v-for="lang in getLangs(hymn).sort((a, b) => a > b ? -1 : 1)" 
                             class="col" :style="{ 'font-size': fontSizeWithRem }"
-                            :class="lang==='arabic'?'arabic':''"
+                            :class="/arabic/.test(lang) ? 'arabic' : ''"
                             >
                             {{ hymn[lang][verseIndex]?.split(/\n+/)[subIndex] }}
                         </div>
@@ -76,7 +76,7 @@ export default {
         toggler_1: true,
         hymns,
         langs,
-        selectedLangs:langs,
+        selectedLangs:langs.slice(0,-1),
         showMenu: false,
         selectedHymns: hymns,
         fontSize: 1,

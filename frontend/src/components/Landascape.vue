@@ -49,7 +49,7 @@
                     :class="(currentVerses.startingVerseIndex + index) % 2 === 0 ? 'bahari' : 'quibli'">
                     <div class="row" v-for="(_, subIndex) in Array(currentVerses[selectedLangs[0]][0].length)">
                         <div v-for="lang in selectedLangs.sort((a, b) => a > b ? -1 : 1)" class="col mt-4"
-                            :class="lang === 'arabic' ? 'arabic' : ''">
+                            :class="/arabic/.test(lang) ? 'arabic' : ''">
                             <p :style="{ 'font-size': fontSizeWithRem }">
                                 {{ currentVerses?.[lang]?.[index]?.[subIndex] }}
                             </p>
@@ -109,7 +109,7 @@ export default {
         isMenuOpen: false,
         isSettingsOpen: false,
         scrollHeight: 550,
-        selectedLangs: langs,
+        selectedLangs: langs.slice(0,-1),
         langs,
         covertToSenctenceCase
     }),
@@ -355,7 +355,7 @@ button {
     right: 15px;
     top: 65px;
     width: 180px;
-    height: 180px;
+    height: 200px;
     z-index: 20;
     cursor: pointer;
 }
