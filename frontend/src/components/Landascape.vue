@@ -37,12 +37,12 @@
 
             <header class="d-flex justify-content-between align-items-start mt-1 ">
                 <span @click.prevent="toggleMenu"
-                    class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2"
-                    :class="isMenuOpen ? 'menu-icon-rotate me-2' : 'menu-icon-rotate-reverse'">menu</span>
+                    class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2"
+                    :class="isMenuOpen ? 'menu-icon-rotate me-2' : 'menu-icon-rotate-reverse'">|</span>
                 <span @click.prevent="toggleSettings"
-                    class="nav-bar cursor-pointer menu-icon material-symbols-outlined d-inline-block p-2">{{
+                    class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2">{{
                 isSettingsOpen
-                    ? 'close' : 'settings' }}</span>
+                    ? `x` : '*' }}</span>
             </header>
             <main class="row">
                 <div v-for="(_, index) in currentVerses[selectedLangs[0]]" class="row"
@@ -311,7 +311,9 @@ button {
 }
 
 .menu-icon {
-    font-size: 2.5rem;
+    text-align: center;
+    font-size: 2rem;
+    width: 3.75rem;
 }
 
 .menu-icon-rotate {
@@ -354,7 +356,7 @@ button {
 
 .settings-pos {
     right: 15px;
-    top: 65px;
+    top: 73px;
     width: 180px;
     height: 200px;
     z-index: 20;
