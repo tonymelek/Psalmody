@@ -49,7 +49,7 @@
                     :class="(currentVerses.startingVerseIndex + index) % 2 === 0 ? 'bahari' : 'quibli'">
                     <div class="row" v-for="(_, subIndex) in Array(currentVerses[selectedLangs[0]][0].length)">
                         <div v-for="lang in selectedLangs.sort((a, b) => a > b ? -1 : 1)" class="col mt-4"
-                            :class="/arabic/.test(lang) ? 'arabic' : ''">
+                            :class="getClassNameByLang(lang)">
                             <p :style="{ 'font-size': fontSizeWithRem }">
                                 {{ currentVerses?.[lang]?.[index]?.[subIndex] }}
                             </p>
@@ -74,7 +74,7 @@
 
 <script>
 import hymns from '../assets/hymns/indexedHymns';
-import { scrollToTop, getPreselectedHymnIndex,covertToSenctenceCase } from '../utils';
+import { scrollToTop, getPreselectedHymnIndex,covertToSenctenceCase ,getClassNameByLang} from '../utils';
 import { langs } from '../constants';
 const waitFor = (timeout) => new Promise((res) => {
     setTimeout(() => {
@@ -111,7 +111,8 @@ export default {
         scrollHeight: 550,
         selectedLangs: langs.slice(0,-1),
         langs,
-        covertToSenctenceCase
+        covertToSenctenceCase,
+        getClassNameByLang
     }),
     mounted() {
         document.querySelector('body').setAttribute('style', 'background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');

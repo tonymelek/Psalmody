@@ -17,3 +17,8 @@ export const covertToSenctenceCase=camelCase=>{
     const res=camelCase.replace(/[A-Z]/g,l=>` ${l.toUpperCase()}`);
     return res.charAt(0).toUpperCase()+res.slice(1);
 }
+
+export const getClassNameByLang=lang=>{
+    if(/arabic/.test(lang)) return 'arabic';
+    if('coptic'===lang) return 'coptic';
+}

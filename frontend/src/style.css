@@ -1,26 +1,34 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+
 html {
   overflow-x: hidden;
 }
-.arabic{
+
+.arabic {
   direction: rtl;
 }
-.pre-wrap{
+
+.pre-wrap {
   white-space: pre-wrap;
 }
-.inline-block{
+
+.inline-block {
   display: inline-block;
 }
-.text-right{
+
+.text-right {
   text-align: right;
 }
-.cursor-pointer:hover{
+
+.cursor-pointer:hover {
   cursor: pointer;
 }
-.stick{
+
+.stick {
   position: fixed;
   top: 0;
 }
+
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -61,15 +69,15 @@ html {
   transition: .4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #2196F3;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(1rem);
   -ms-transform: translateX(1rem);
   transform: translateX(1rem);
@@ -84,25 +92,41 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.menu_width{
-    height: 88vh;
-    overflow-y: scroll;
+.menu_width {
+  height: 88vh;
+  overflow-y: scroll;
 }
+
 ::-webkit-scrollbar {
-  width: 0;  /*Remove scrollbar space */
-   background: transparent;  /*Optional: just make scrollbar invisible*/
+  width: 0;
+  /*Remove scrollbar space */
+  background: transparent;
+  /*Optional: just make scrollbar invisible*/
 }
-a{
+
+a {
   text-decoration: none;
 }
-.verses:nth-child(odd){
+
+.verses:nth-child(odd) {
   background-color: beige;
   margin-top: 0;
   margin-bottom: 0;
 }
-.bahari{
+
+.bahari {
   color: wheat;
 }
-.quibli{
+
+.quibli {
   color: rgb(222, 220, 253);
+}
+
+@font-face {
+  font-family: 'coptic';
+  src: url('./assets/fonts/coptic.woff') format('woff');
+}
+
+.coptic {
+  font-family: 'coptic', sans-serif;
 }
