@@ -49,7 +49,7 @@
         </div>
         <div v-for="hymn in selectedHymns" :class="{ 'd-none': langsCount === 0 }">
             <h3 class="text-danger text-center pt-5" :id="hymn.name">{{ hymn.name }}</h3>
-            <div v-for="(_,verseIndex) in Array(hymn.english.length)" class="container verses">
+            <div v-for="(_,verseIndex) in Array(hymn.english?.length||0)" class="container verses">
                 <div class="row my-3 " :class="{ 'text-primary': verseIndex % 2 === 0 }">
                     <div v-for="(_,subIndex) in hymn.english[0].split(/\n+/)" class="row">
                         <div v-for="lang in getLangs(hymn).sort((a, b) => a > b ? -1 : 1)" 
@@ -67,14 +67,15 @@
 </template>
 
 <script>
-import hymns from '../assets/hymns/indexedHymns'
+import getHymns from '../assets/hymns/indexedHymns'
 import { langs } from '../constants';
 import {covertToSenctenceCase} from '../utils'
+const hymns=getHymns();
 export default {
     name: 'portrait-view',
     data: () => ({
         toggler_1: true,
-        hymns,
+        hymns:hymns,
         langs,
         selectedLangs:langs.slice(0,-1),
         showMenu: false,

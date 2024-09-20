@@ -9,15 +9,15 @@
                 :class="isMenuOpen ? 'animate__animated animate__fadeInLeft' : 'animate-fadeOutUpSlow'">
                 <div>
                     <div>
-                        <div class="font-2 px-3" v-for="(hymn, index) in selectedHymns" :key="hymn.name"
+                        <div class="font-2 px-3" v-for="(hymn, index) in selectedHymns" :key="hymn?.name"
                             @click="updateSelectedHymn(index)">
-                            <span :class="getHymnLocation(index)">{{ hymn.name }}</span>
+                            <span :class="getHymnLocation(index)">{{ hymn?.name }}</span>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- settings menu -->
-            <nav ref="settingsMenu" class="position-absolute nav-bar bg-dark settings-pos"
+            <nav ref="settingsMenu" class="position-absolute nav-bar bg-dark settings-pos px-2"
                 :class="isSettingsOpen ? 'animate__animated animate__fadeInRight' : 'animate-fadeOutUpFast'">
                 <div class="d-flex justify-content-center py-2">
                     <button @click.prevent="changeFontSize('-')" class="smaller">A</button>
@@ -33,11 +33,13 @@
                         <div class="mx-2">{{ covertToSenctenceCase(lang) }}</div>
                     </div>
                 </div>
+                <div>
+                    <input id="startDate" class="form-control mt-2" type="date" v-model="date" />
+                </div>
             </nav>
 
             <header class="d-flex justify-content-between align-items-start mt-1 ">
-                <span @click.prevent="toggleMenu"
-                    class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2"
+                <span @click.prevent="toggleMenu" class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2"
                     :class="isMenuOpen ? 'menu-icon-rotate me-2' : 'menu-icon-rotate-reverse'">|</span>
                 <span @click.prevent="toggleSettings"
                     class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2">{{
@@ -74,7 +76,7 @@
 
 <script>
 import hymns from '../assets/hymns/indexedHymns';
-import { scrollToTop, getPreselectedHymnIndex,covertToSenctenceCase ,getClassNameByLang} from '../utils';
+import { scrollToTop, getPreselectedHymnIndex, covertToSenctenceCase, getClassNameByLang } from '../utils';
 import { langs } from '../constants';
 const waitFor = (timeout) => new Promise((res) => {
     setTimeout(() => {
@@ -91,6 +93,7 @@ const adjustHeight = async (_this) => {
         if (document.body.scrollHeight > window.innerHeight) _this.verseGroupSize = 1;
     }
 }
+const isoDate = (date = new Date()) => date.toISOString().split("T")[0];
 export default {
     name: 'landscape-view',
     props: {
@@ -101,7 +104,7 @@ export default {
         }
     },
     data: () => ({
-        selectedHymns: hymns,
+        selectedHymns: hymns(sessionStorage.getItem('date') || isoDate()),
         verseGroupSize: 2,
         verseGroupIndex: 0,
         hymnIndex: 0,
@@ -109,14 +112,15 @@ export default {
         isMenuOpen: false,
         isSettingsOpen: false,
         scrollHeight: 550,
-        selectedLangs: langs.slice(0,-1),
+        selectedLangs: langs.slice(0, -1),
         langs,
         covertToSenctenceCase,
-        getClassNameByLang
+        getClassNameByLang,
+        date: sessionStorage.getItem('date') || isoDate()
     }),
     mounted() {
         document.querySelector('body').setAttribute('style', 'background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
-        this.hymnIndex = getPreselectedHymnIndex(hymns, this.hymn);
+        this.hymnIndex = getPreselectedHymnIndex(hymns(this.date), this.hymn);
         this.$refs.hymnsMenu.style.display = 'none';
         this.$refs.settingsMenu.style.display = 'none';
     },
@@ -128,6 +132,12 @@ export default {
                 this.langs = availableLangs;
                 const selectedLangs = [...this.selectedLangs].filter(v => availableLangs.includes(v));
                 this.selectedLangs = selectedLangs;
+            }
+        },
+        date:{
+            handler(newVal,OldVal){
+                sessionStorage.setItem('date',newVal);
+                this.selectedHymns=hymns(new Date(newVal));
             }
         }
     },
@@ -167,9 +177,9 @@ export default {
                 this.isSettingsOpen = false;
                 return;
             }
-            if ((this.verseGroupIndex + 1) * this.verseGroupSize >= this.currentHymn.english.length && this.hymnIndex === this.selectedHymns.length-1) {
+            if ((this.verseGroupIndex + 1) * this.verseGroupSize >= this.currentHymn.english.length && this.hymnIndex === this.selectedHymns.length - 1) {
                 return; //last versegroup in last hymn
-            }else if ((this.verseGroupIndex + 1) * this.verseGroupSize >= this.currentHymn.english.length) {
+            } else if ((this.verseGroupIndex + 1) * this.verseGroupSize >= this.currentHymn.english.length) {
                 this.verseGroupIndex = 0;
                 this.hymnIndex++
             }
@@ -357,8 +367,8 @@ button {
 .settings-pos {
     right: 15px;
     top: 73px;
-    width: 180px;
-    height: 200px;
+    width: 190px;
+    height: 240px;
     z-index: 20;
     cursor: pointer;
 }

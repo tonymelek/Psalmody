@@ -40,48 +40,60 @@ import creed_intro from './38-0_creed_intro.json';
 import creed from './39-0_creed.json';
 import amen_keryalison from './40-0_amen_keryalison.json';
 
-const hymns = [
-    ten_thino,
-    resurrection_tennav,
-    first_hoos,
-    lobsh_of_first_hoos,
-    second_hoos,
-    second_lobsh,
-    third_hoos,
-    arepsalin,
-    ten_oweeh_enthok,
-    comemoration,
-    doxology_st_mary,
-    doxology_archangel_michael,
-    doxology_st_anthony,
-    conclusion_of_doxologies,
-    fourth_hoos,
-    aynahti,
-    aykoti,
-    theotoky_adam_intro,
-    theotoky_part_1,
-    theotoky_part_2,
-    theotoky_part_3,
-    theotoky_part_4,
-    theotoky_part_5,
-    theotoky_part_6,
-    gospel,
-    shere_ne_maria,
-    semouti,
-    seven_times,
-    theotoky_part_10,
-    theotoky_part_11,
-    theotoky_part_12,
-    theotoky_part_13,
-    theotoky_part_14,
-    theotoky_part_15,
-    theotoky_part_16,
-    theotoky_part_17,
-    theotoky_part_18,
-    your_mercies,
-    creed_intro,
-    creed,
-    amen_keryalison
-]
+import occasions from '../occasions/index';
+
+import { CopticFeasts } from '../util';
+
+
+
+const hymns = (date = new Date().toISOString()) => {
+    const copticFeasts = new CopticFeasts(new Date(date));
+    const occasionName = copticFeasts.feast.name
+    const isOccasion = !!occasionName;
+    return [
+        ten_thino,
+        resurrection_tennav,
+        first_hoos,
+        lobsh_of_first_hoos,
+        second_hoos,
+        second_lobsh,
+        third_hoos,
+        arepsalin,
+        ten_oweeh_enthok,
+        comemoration,
+        ...(isOccasion ? [occasions[occasionName].doxology] : []),
+        doxology_st_mary,
+        doxology_archangel_michael,
+        doxology_st_anthony,
+        conclusion_of_doxologies,
+        fourth_hoos,
+        isOccasion ? occasions[occasionName].pasli_adam : aynahti,
+        aykoti,
+        theotoky_adam_intro,
+        theotoky_part_1,
+        theotoky_part_2,
+        theotoky_part_3,
+        theotoky_part_4,
+        theotoky_part_5,
+        theotoky_part_6,
+        gospel,
+        shere_ne_maria,
+        semouti,
+        seven_times,
+        theotoky_part_10,
+        theotoky_part_11,
+        theotoky_part_12,
+        theotoky_part_13,
+        theotoky_part_14,
+        theotoky_part_15,
+        theotoky_part_16,
+        theotoky_part_17,
+        theotoky_part_18,
+        your_mercies,
+        creed_intro,
+        creed,
+        amen_keryalison
+    ]
+}
 
 export default hymns;
