@@ -3,9 +3,14 @@
 html {
   overflow-x: hidden;
 }
+@font-face {
+  font-family: 'arabic';
+  src: url('./assets/fonts/arabic.woff') format('woff');
+}
 
 .arabic {
   direction: rtl;
+  font-family: 'arabic';
 }
 
 .pre-wrap {
