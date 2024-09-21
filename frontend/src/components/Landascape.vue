@@ -34,16 +34,16 @@
                     </div>
                 </div>
                 <div>
-                    <input id="startDate" class="form-control mt-2" type="date" v-model="date" />
+                    <input id="startDate" class="form-control mt-2 mb-1 d-block" type="date" v-model="date" />
+                    <span class="text-center d-block w-100" @click.prevent="setLive">Live Date</span>
                 </div>
             </nav>
 
             <header class="d-flex justify-content-between align-items-start mt-1 ">
                 <span @click.prevent="toggleMenu" class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2"
                     :class="isMenuOpen ? 'menu-icon-rotate me-2' : 'menu-icon-rotate-reverse'">|</span>
-                <span @click.prevent="toggleSettings"
-                    class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2">{{
-                isSettingsOpen
+                <span @click.prevent="toggleSettings" class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2">{{
+                    isSettingsOpen
                     ? `x` : '*' }}</span>
             </header>
             <main class="row">
@@ -134,10 +134,10 @@ export default {
                 this.selectedLangs = selectedLangs;
             }
         },
-        date:{
-            handler(newVal,OldVal){
-                sessionStorage.setItem('date',newVal);
-                this.selectedHymns=hymns(new Date(newVal));
+        date: {
+            handler(newVal, OldVal) {
+                if (newVal !== isoDate()) sessionStorage.setItem('date', newVal);
+                this.selectedHymns = hymns(new Date(newVal));
             }
         }
     },
@@ -163,6 +163,10 @@ export default {
         }
     },
     methods: {
+        setLive() {
+            sessionStorage.removeItem('date')
+            this.date=isoDate();
+        },
         getHymnLocation(index) {
             if (index < this.hymnIndex) {
                 return 'text-danger'
@@ -368,7 +372,7 @@ button {
     right: 15px;
     top: 73px;
     width: 190px;
-    height: 240px;
+    height: 270px;
     z-index: 20;
     cursor: pointer;
 }

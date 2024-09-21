@@ -16,7 +16,7 @@ const copticMonthsMap = [
     "Mesra",
     "Nasie"
 ]
-const twoDigit = num => num > 10 ? num : `0${num}`;
+const twoDigit = num => num > 9 ? num : `0${num}`;
 
 const copticFeastsMap = {
     'Nayrouz': { startDay: 1, endDay: 16, calendar: 'coptic', startMonth: 1, endMonth: 1 ,tune:'joy'},
