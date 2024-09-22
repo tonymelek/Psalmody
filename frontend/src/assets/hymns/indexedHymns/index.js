@@ -48,6 +48,7 @@ import { CopticFeasts } from '../util';
 
 const hymns = (date = new Date().toISOString()) => {
     const copticFeasts = new CopticFeasts(new Date(date));
+    console.log(copticFeasts.all);
     const occasionName = copticFeasts.feast.name
     const isOccasion = !!occasionName;
     return [

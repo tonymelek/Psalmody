@@ -3,6 +3,7 @@
 html {
   overflow-x: hidden;
 }
+
 @font-face {
   font-family: 'arabic';
   src: url('./assets/fonts/arabic.woff') format('woff');
@@ -10,7 +11,7 @@ html {
 
 .arabic {
   direction: rtl;
-  font-family: 'arabic';
+  font-family: 'arabic', 'Amiri', 'Arial', sans-serif;
 }
 
 .pre-wrap {
