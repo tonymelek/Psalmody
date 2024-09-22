@@ -14,7 +14,8 @@
             </div>
 
 
-            <div v-show="showMenu">
+            <div v-show="showMenu" class="hamburger-menu-wrapper">
+                <!-- Languages Selectors -->
                 <div class="row pt-2  bg-light animate__animated animate__fadeInDown">
                     <div v-for="lang in langs" class="col d-flex align-items-center ">
                         <label class="switch">
@@ -22,11 +23,12 @@
                                 :disabled="selectedLangs.length === 1 && selectedLangs.includes(lang)">
                             <span class="slider round"></span>
                         </label>
-                        <div class="mx-2">{{ covertToSenctenceCase(lang) }}</div>
+                        <span class="mx-2">{{ covertToSenctenceCase(lang) }}</span>
                     </div>
-
                 </div>
-                <div class="d-flex flex-column  pt-2  bg-light animate__animated animate__fadeInLeft menu_width">
+
+                <div ref="hamburger_menu"
+                    class="d-flex flex-column  pt-2  bg-light animate__animated animate__fadeInLeft hamburger_menu">
                     <div v-if="selectAll">
                         <button class="btn btn-primary mb-3" @click="select('all')">Select All</button>
                     </div>
@@ -49,16 +51,14 @@
         </div>
         <div v-for="hymn in selectedHymns" :class="{ 'd-none': langsCount === 0 }">
             <h3 class="text-danger text-center pt-5" :id="hymn.name">{{ hymn.name }}</h3>
-            <div v-for="(_,verseIndex) in Array(hymn.english?.length||0)" class="container verses">
+            <div v-for="(_, verseIndex) in Array(hymn.english?.length || 0)" class="container verses">
                 <div class="row my-3 " :class="{ 'text-primary': verseIndex % 2 === 0 }">
-                    <div v-for="(_,subIndex) in hymn.english[0].split(/\n+/)" class="row">
-                        <div v-for="lang in getLangs(hymn).sort((a, b) => a > b ? -1 : 1)" 
-                            class="col" :style="{ 'font-size': fontSizeWithRem }"
-                            :class="/arabic/.test(lang) ? 'arabic' : ''"
-                            >
+                    <div v-for="(_, subIndex) in hymn.english[0].split(/\n+/)" class="row">
+                        <div v-for="lang in getLangs(hymn).sort((a, b) => a > b ? -1 : 1)" class="col"
+                            :style="{ 'font-size': fontSizeWithRem }" :class="getClassNameByLang(lang)">
                             {{ hymn[lang][verseIndex]?.split(/\n+/)[subIndex] }}
                         </div>
-                 
+
                     </div>
                 </div>
             </div>
@@ -69,23 +69,24 @@
 <script>
 import getHymns from '../assets/hymns/indexedHymns'
 import { langs } from '../constants';
-import {covertToSenctenceCase} from '../utils'
-const hymns=getHymns();
+import { covertToSenctenceCase,getClassNameByLang } from '../utils'
+const hymns = getHymns();
 export default {
     name: 'portrait-view',
     data: () => ({
         toggler_1: true,
-        hymns:hymns,
+        hymns: hymns,
         langs,
-        selectedLangs:langs.slice(0,-1),
+        selectedLangs: langs.slice(0, -1),
         showMenu: false,
         selectedHymns: hymns,
         fontSize: 1,
-        covertToSenctenceCase
+        covertToSenctenceCase,
+        getClassNameByLang
     }),
     methods: {
-        getLangs(hymn){
-            return Object.keys(hymn).filter(v => v != 'name').filter(v=>[...this.selectedLangs].includes(v))
+        getLangs(hymn) {
+            return Object.keys(hymn).filter(v => v != 'name').filter(v => [...this.selectedLangs].includes(v))
         },
         changeFontSize(step) {
             this.fontSize += step
@@ -94,6 +95,7 @@ export default {
             switch (type) {
                 case 'menu':
                     this.showMenu = !this.showMenu
+                    if (this.showMenu) this.$refs['hamburger_menu'].focus();
                     break;
                 default:
                     break;
@@ -157,5 +159,9 @@ export default {
     border-radius: 2px;
     line-height: 2rem;
     padding: 0 .5rem;
+}
+.hamburger-menu-wrapper{
+    height: 100vh;
+    background-color: white;
 }
 </style>

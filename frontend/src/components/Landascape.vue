@@ -2,7 +2,7 @@
     <div class="text-light  wrapper prevent-select">
         <div class="container position-relative">
             <h1 class="position-absolute header-pos">{{ currentHymn.name }} - ({{ verseGroupIndex + 1 }}/{{
-                currentHymnTotalGroups }})</h1>
+            currentHymnTotalGroups }})</h1>
 
             <!-- hymns menu -->
             <nav ref="hymnsMenu" class=" justify-content-between p-2 nav-bar position-absolute bg-dark menu-pos"
@@ -42,9 +42,10 @@
             <header class="d-flex justify-content-between align-items-start mt-1 ">
                 <span @click.prevent="toggleMenu" class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2"
                     :class="isMenuOpen ? 'menu-icon-rotate me-2' : 'menu-icon-rotate-reverse'">|</span>
-                <span @click.prevent="toggleSettings" class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2">{{
-                    isSettingsOpen
-                    ? `x` : '*' }}</span>
+                <span @click.prevent="toggleSettings"
+                    class="nav-bar cursor-pointer menu-icon coptic d-inline-block p-2">{{
+            isSettingsOpen
+                ? `x` : '*' }}</span>
             </header>
             <main class="row">
                 <div v-for="(_, index) in currentVerses[selectedLangs[0]]" class="row"
@@ -77,6 +78,7 @@
 <script>
 import hymns from '../assets/hymns/indexedHymns';
 import { scrollToTop, getPreselectedHymnIndex, covertToSenctenceCase, getClassNameByLang } from '../utils';
+import { CopticFeasts } from '../assets/hymns/util';
 import { langs } from '../constants';
 const waitFor = (timeout) => new Promise((res) => {
     setTimeout(() => {
@@ -116,7 +118,8 @@ export default {
         langs,
         covertToSenctenceCase,
         getClassNameByLang,
-        date: sessionStorage.getItem('date') || isoDate()
+        date: sessionStorage.getItem('date') || isoDate(),
+        copticFeasts: new CopticFeasts()
     }),
     mounted() {
         document.querySelector('body').setAttribute('style', 'background-color:rgb(33,37,41);height:100%;over-flow-y:hidden;');
@@ -137,6 +140,7 @@ export default {
         date: {
             handler(newVal, OldVal) {
                 if (newVal !== isoDate()) sessionStorage.setItem('date', newVal);
+                this.hymnIndex = 0;
                 this.selectedHymns = hymns(new Date(newVal));
             }
         }
@@ -164,8 +168,9 @@ export default {
     },
     methods: {
         setLive() {
-            sessionStorage.removeItem('date')
-            this.date=isoDate();
+            sessionStorage.removeItem('date');
+            this.hymnIndex = 0;
+            this.date = isoDate();
         },
         getHymnLocation(index) {
             if (index < this.hymnIndex) {

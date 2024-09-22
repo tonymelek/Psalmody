@@ -1,5 +1,5 @@
-const dateRegex = new RegExp(/\d{1,2}\s[a-z]+\s\d{4}/, 'i');
-const monthRegex = new RegExp(/[a-z]+/, 'i');
+const dateRegex = new RegExp(/\d{2}\/\d{2}\/\d{4}/, 'i');
+const monthRegex = new RegExp(/\/\d{2}\//, 'i');
 const copticMonthsMap = [
     "",
     "Tout",
@@ -28,29 +28,31 @@ const copticFeastsMap = {
 }
 
 export class CopticFeasts {
-    #date
+    date
     constructor(date = new Date()) {
-        this.#date = date;
+        this.date = date;
     }
     get copticDate() {
         return new Intl.DateTimeFormat('en-AU', {
             calendar: 'coptic',
-            day: "numeric",
-            month: "long",
+            day: "2-digit",
+            month: "2-digit",
             year: "numeric"
-        }).format(this.#date).match(dateRegex)[0];
+        }).format(this.date).match(dateRegex)[0];
+    }
+    get copticMonthNum() {
+        return this.copticDate.match(monthRegex)[0].replace(/\//g,'');
     }
     get copticMonth() {
-        return this.copticDate.match(monthRegex)[0];
+        return copticMonthsMap[parseInt(this.copticMonthNum)];
     }
     get copticDay() {
-        return parseInt(this.copticDate.split(/\s/)[0])
+        return parseInt(this.copticDate.split(/\//)[0])
     }
    
     get feast() {
-        const copticMonthNum = copticMonthsMap.findIndex(m => m === this.copticMonth);
-        const copticDate = `${copticMonthNum}${twoDigit(this.copticDay)}`;
-        const gregDate=this.#date.toISOString().match(/-\d{2}-\d{2}/)[0].replace(/-/g,'');
+        const copticDate = `${this.copticMonthNum}${twoDigit(this.copticDay)}`;
+        const gregDate=this.date.toISOString().match(/-\d{2}-\d{2}/)[0].replace(/-/g,'');
 
         for (let key in copticFeastsMap) {
             const curr = copticFeastsMap[key];
