@@ -112,13 +112,15 @@ export class CopticFeasts {
     get isSatNight() {
         return this.#date.getDay() === 6;
     }
-
+    #getWeekdayNum(){
+        return (this.#date.getDay()+1)%7
+    }
     get weekday() {
-        return weekdays[this.#date.getDay()];
+        return weekdays[this.#getWeekdayNum()];
     }
 
     get adamOrWatos(){
-        return this.weekday>=0 && this.weekday<=2 ? 'adam' : 'watos';
+        return this.#getWeekdayNum()>=0 && this.#getWeekdayNum()<=2 ? 'adam' : 'watos';
     }
 
     get feast() {

@@ -16,6 +16,7 @@ import fourth_hoos from './15-0_fourth_hoos.json';
 import aynahti from './16-0_aynahti.json';
 import aykoti from './17-0_aykoti.json';
 import theotoky_adam_intro from './18-0_theotoky_adam_intro.json';
+import theotoky_watos_intro from './18-1_theotoky_watos_intro.json';
 import theotoky_part_1 from './19-0_theotoky_part_1.json';
 import theotoky_part_2 from './20-0_theotoky_part_2.json';
 import theotoky_part_3 from './21-0_theotoky_part_3.json';
@@ -36,11 +37,13 @@ import theotoky_part_16 from './34-0_theotoky_part_16.json';
 import theotoky_part_17 from './35-0_theotoky_part_17.json';
 import theotoky_part_18 from './36-0_theotoky_part_18.json';
 import your_mercies from './37-0_your_mercies.json';
+import our_lord from './37-1_our_lord.json'
 import creed_intro from './38-0_creed_intro.json';
 import creed from './39-0_creed.json';
 import amen_keryalison from './40-0_amen_keryalison.json';
 
 import occasions from '../occasions/index';
+import weekdays from '../weekdayPsaliAndTheotoky';
 
 import { CopticFeasts } from '../util';
 
@@ -102,10 +105,10 @@ const hymns = (date = new Date().toISOString()) => {
         fourth_hoos,
         ...(isOccasion && occasions[occasionName]?.pasli_adam ? [occasions[occasionName].pasli_adam] : []),
         ...(!isOccasion && copticFeasts.isSatNight ? [aynahti] : []),
-        aykoti, //weekday psali
-        ...(copticFeasts.adamOrWatos === 'adam' ? [theotoky_adam_intro] : []), //weekday watos intro
-        ...(copticFeasts.isSatNight ? sundayTheotokyParts : []), //weekday adam / watos Theotoky Parts
-        ...(copticFeasts.adamOrWatos === 'adam' ? [your_mercies] : []), //weekday watos lobsh
+        ...(!isOccasion && copticFeasts.isSatNight ? [aykoti] : [weekdays[copticFeasts.weekday]?.psali]),
+        ...(copticFeasts.adamOrWatos === 'adam' ? [theotoky_adam_intro] : [theotoky_watos_intro]), //weekday watos intro
+        ...(copticFeasts.isSatNight ? sundayTheotokyParts : [weekdays[copticFeasts.weekday].theotoky, weekdays[copticFeasts.weekday].lobsh]), //weekday adam / watos Theotoky Parts
+        ...(copticFeasts.adamOrWatos === 'adam' ? [your_mercies] : [our_lord]), //weekday watos lobsh
         ...commonEnd
     ]
 }
