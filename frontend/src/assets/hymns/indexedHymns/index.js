@@ -48,39 +48,33 @@ import { CopticFeasts } from '../util';
 
 const hymns = (date = new Date().toISOString()) => {
     const copticFeasts = new CopticFeasts(new Date(date));
-    console.log(copticFeasts.all);
     const occasionName = copticFeasts.feast.name
     const isOccasion = !!occasionName;
-    return [
+    const commonStart = [
         ten_thino,
         resurrection_tennav,
         first_hoos,
         lobsh_of_first_hoos,
-        second_hoos,
-        second_lobsh,
-        third_hoos,
-        arepsalin,
-        ten_oweeh_enthok,
-        comemoration,
-        ...(isOccasion ? [occasions[occasionName].doxology] : []),
-        doxology_st_mary,
-        doxology_archangel_michael,
-        doxology_st_anthony,
-        conclusion_of_doxologies,
-        fourth_hoos,
-        isOccasion ? occasions[occasionName].pasli_adam : aynahti,
-        aykoti,
-        theotoky_adam_intro,
+    ];
+    const commonTheotoky = [
+        gospel,
+        shere_ne_maria,
+        semouti,
+        seven_times
+    ]
+    const commonEnd = [
+        creed_intro,
+        creed,
+        amen_keryalison
+    ]
+    const sundayTheotokyParts = [
         theotoky_part_1,
         theotoky_part_2,
         theotoky_part_3,
         theotoky_part_4,
         theotoky_part_5,
         theotoky_part_6,
-        gospel,
-        shere_ne_maria,
-        semouti,
-        seven_times,
+        ...commonTheotoky,
         theotoky_part_10,
         theotoky_part_11,
         theotoky_part_12,
@@ -90,10 +84,29 @@ const hymns = (date = new Date().toISOString()) => {
         theotoky_part_16,
         theotoky_part_17,
         theotoky_part_18,
-        your_mercies,
-        creed_intro,
-        creed,
-        amen_keryalison
+    ]
+    return [
+        ...commonStart,
+        ...(!copticFeasts.isSatNight ? commonTheotoky : []),
+        second_hoos,
+        second_lobsh,
+        third_hoos,
+        arepsalin,
+        ten_oweeh_enthok,
+        comemoration,
+        ...(isOccasion && occasions[occasionName]?.doxology ? [occasions[occasionName].doxology] : []),
+        doxology_st_mary,
+        doxology_archangel_michael,
+        doxology_st_anthony,
+        conclusion_of_doxologies,
+        fourth_hoos,
+        ...(isOccasion && occasions[occasionName]?.pasli_adam ? [occasions[occasionName].pasli_adam] : []),
+        ...(!isOccasion && copticFeasts.isSatNight ? [aynahti] : []),
+        aykoti, //weekday psali
+        ...(copticFeasts.adamOrWatos === 'adam' ? [theotoky_adam_intro] : []), //weekday watos intro
+        ...(copticFeasts.isSatNight ? sundayTheotokyParts : []), //weekday adam / watos Theotoky Parts
+        ...(copticFeasts.adamOrWatos === 'adam' ? [your_mercies] : []), //weekday watos lobsh
+        ...commonEnd
     ]
 }
 

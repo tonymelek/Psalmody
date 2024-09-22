@@ -1,5 +1,3 @@
-const dateRegex = new RegExp(/\d{2}\/\d{2}\/\d{4}/, 'i');
-const monthRegex = new RegExp(/\/\d{2}\//, 'i');
 const copticMonthsMap = [
     "",
     "Tout",
@@ -17,13 +15,19 @@ const copticMonthsMap = [
     "Nasie"
 ]
 const twoDigit = num => num > 9 ? num : `0${num}`;
-
-
 const oneDayMs = 24 * 60 * 60 * 1000;
+const weekdays=[
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+]
 
 
-
-function calculateOrthodoxEaster(year) {
+const calculateOrthodoxEaster = year => {
     // Calculate the number of years since the last Julian leap year
     const yearsSinceJulianLeapYear = year % 4;
     // Calculate the weekday of March 21st in the Julian calendar
@@ -65,12 +69,16 @@ export class CopticFeasts {
         this.#date = date;
         const year = date.getFullYear();
         const { hosannaDate, pentecosteDate, easterDate, apostolesFastStartDate } = calculateOrthodoxEaster(year);
+
         const hosannaDay = hosannaDate.getDate();
         const hosannaMonth = hosannaDate.getMonth() + 1;
+
         const pentecosteDay = pentecosteDate.getDate();
         const pentecosteMonth = pentecosteDate.getMonth() + 1;
+
         const easterDay = easterDate.getDate();
         const easterMonth = easterDate.getMonth() + 1;
+
         const apostolesFastStartDay = apostolesFastStartDate.getDate();
         const apostolesFastStartMonth = apostolesFastStartDate.getMonth() + 1;
 
@@ -85,13 +93,13 @@ export class CopticFeasts {
             day: "2-digit",
             month: "2-digit",
             year: "numeric"
-        }).format(this.#date).match(dateRegex)[0];
+        }).format(this.#date);
     }
     get copticMonthNum() {
-        return this.copticDate.match(monthRegex)[0].replace(/\//g, '');
+        return parseInt(this.copticDate.split(/\//)[1]);
     }
     get copticMonth() {
-        return copticMonthsMap[parseInt(this.copticMonthNum)];
+        return copticMonthsMap[this.copticMonthNum];
     }
     get copticDay() {
         return parseInt(this.copticDate.split(/\//)[0])
@@ -100,14 +108,18 @@ export class CopticFeasts {
     get all() {
         return copticFeastsMap
     }
-    // get easterDay(){
-    //     const year=this.#date.getFullYear();
-    //     return new Intl.DateTimeFormat('en-AU', {
-    //         day: "2-digit",
-    //         month: "2-digit",
-    //         year: "numeric"
-    //     }).format(calculateOrthodoxEaster(year));
-    // }
+
+    get isSatNight() {
+        return this.#date.getDay() === 6;
+    }
+
+    get weekday() {
+        return weekdays[this.#date.getDay()];
+    }
+
+    get adamOrWatos(){
+        return this.weekday>=0 && this.weekday<=2 ? 'adam' : 'watos';
+    }
 
     get feast() {
         const copticDate = `${this.copticMonthNum}${twoDigit(this.copticDay)}`;
