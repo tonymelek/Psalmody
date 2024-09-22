@@ -11,7 +11,7 @@ html {
 
 .arabic {
   direction: rtl;
-  font-family: 'arabic', 'Amiri', 'Arial', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont,  'Geeza Pro', 'Arabic Typesetting','arabic', Arial,  sans-serif;
 }
 
 .pre-wrap {
