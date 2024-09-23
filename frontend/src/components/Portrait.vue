@@ -16,6 +16,7 @@
 
             <div v-show="showMenu" class="hamburger-menu-wrapper">
                 <!-- Languages Selectors -->
+                <span class="d-block py-1 text-danger">You can select up to 3 langs, you can alter any of pre-selected</span>
                 <div class="row pt-2  bg-light animate__animated animate__fadeInDown">
                     <div v-for="lang in langs" class="col d-flex align-items-center ">
                         <label class="switch">
@@ -69,7 +70,7 @@
 <script>
 import getHymns from '../assets/hymns/indexedHymns'
 import { langs } from '../constants';
-import { covertToSenctenceCase,getClassNameByLang } from '../utils'
+import { covertToSenctenceCase, getClassNameByLang } from '../utils'
 const hymns = getHymns();
 export default {
     name: 'portrait-view',
@@ -77,13 +78,24 @@ export default {
         toggler_1: true,
         hymns: hymns,
         langs,
-        selectedLangs: langs.slice(0, -1),
+        selectedLangs: JSON.parse(localStorage.getItem('langs_portrait'))||langs.slice(0, -2),
         showMenu: false,
         selectedHymns: hymns,
         fontSize: 1,
         covertToSenctenceCase,
         getClassNameByLang
     }),
+    watch: {
+        selectedLangs: {
+            async handler(newVal, oldVal) {
+                if (newVal.length > 3) {
+                    this.selectedLangs = oldVal;
+                    return;
+                }
+                localStorage.setItem('langs_portrait',JSON.stringify(this.selectedLangs));
+            }
+        }
+    },
     methods: {
         getLangs(hymn) {
             return Object.keys(hymn).filter(v => v != 'name').filter(v => [...this.selectedLangs].includes(v))
@@ -160,7 +172,8 @@ export default {
     line-height: 2rem;
     padding: 0 .5rem;
 }
-.hamburger-menu-wrapper{
+
+.hamburger-menu-wrapper {
     height: 100vh;
     background-color: white;
 }

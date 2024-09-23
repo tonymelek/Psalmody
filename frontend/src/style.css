@@ -2,6 +2,7 @@
 
 html {
   overflow-x: hidden;
+  scroll-behavior: initial!important;
 }
 
 @font-face {

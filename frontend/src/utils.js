@@ -1,5 +1,5 @@
 export const scrollToTop = () => window.scroll({
-    behavior: 'smooth',
+    behavior: "instant",
     left: 0,
     top: 0
 })

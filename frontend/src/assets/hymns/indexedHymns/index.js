@@ -55,7 +55,7 @@ const hymns = (date = new Date().toISOString()) => {
     const isOccasion = !!occasionName;
     const commonStart = [
         ten_thino,
-        resurrection_tennav,
+        ...(copticFeasts.isSatNight|| copticFeasts.feast.name==='Resurrection'?[resurrection_tennav]:[]),
         first_hoos,
         lobsh_of_first_hoos,
     ];
