@@ -4,6 +4,7 @@ const DomParser = require('dom-parser');
 const axios = require('axios');
 const fs = require('fs');
 const { copticTextToEnglish } = require('./copticToEnglish');
+const { copticTextToArabic } = require('./copticToArabic');
 
 //Variables
 PORT = process.env.PORT || 5000
@@ -47,6 +48,8 @@ app.get('/api/psalmody', (req, res) => {
                 output.english = output.copticEnglish;
                 output.copticEnglish = copticTextToEnglish(output.coptic);
             }
+            output.arabicCoptic=copticTextToArabic(output.coptic);
+            
             fs.writeFileSync(`.${dirPath}/${index}-${title.trim().toLowerCase().replace(/(\s|-)+/g, '-')}.json`, JSON.stringify({ name: title, ...output }, null, 2))
             res.send({ name: title, ...output })
         })
