@@ -1,7 +1,7 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-const files=fs.readdirSync('./psalmody').filter(name=>/.+\.json$/.test(name));
+const files=fs.readdirSync('./indexedHymns').filter(name=>/.+\.json$/.test(name));
 
 
 function convertToYaml(jsonData) {
@@ -11,18 +11,30 @@ function convertToYaml(jsonData) {
     },
     sections: [{speaker:'',verses:[]}],
   };
-
-  for (let i = 0; i < jsonData.coptic.length; i++) {
     yamlData.sections[0].verses.push({
-          english: jsonData.english[i],
-          coptic: jsonData.coptic[i],
-          coptic_english: jsonData.copticEnglish[i],
-          arabic: jsonData.arabic[i],
+          english: jsonData.english,
+          coptic: jsonData.coptic,
+          coptic_english: jsonData.copticEnglish,
+          arabic: jsonData.arabic,
+          coptic_arabic:jsonData.arabicCoptic
     });
-  }
+  
 
   return yaml.dump(yamlData);
 }
+
+console.log(files);
+
+files.forEach(file => {
+  // console.log(file.match(/([a-z]|_)+[0-9]*/ig));
+  
+ fs.writeFileSync(`./indexedHymns/yaml/${file.match(/([a-z]|_)+[0-9]*/ig)[0].replace('_','')}.yml`,convertToYaml(require(`./indexedHymns/${file}`)))
+});
+
+
+
+
+
 const lowerCaseMap = {
   'Ⲁ': 'ⲁ', 'Ⲃ': 'ⲃ',
   'Ⲅ': 'ⲅ', 'Ⲇ': 'ⲇ',
@@ -57,7 +69,7 @@ String.prototype.toCopticLowerCase = function() {
 // fs.writeFileSync('./copticWords2.json', JSON.stringify(Array.from(wordsSet),null,2))
 
 
-const words=require('./copticWords3.json');
-const your=new RegExp('ⲛⲉⲛ');
-const havePek=[... new Set(words.map(w=>your.test(w)?w.replace(/^ⲛⲉⲛ/,''):w))]
-fs.writeFileSync('./copticWords3.json', JSON.stringify(havePek,null,2))
+// const words=require('./copticWords3.json');
+// const your=new RegExp('ⲛⲉⲛ');
+// const havePek=[... new Set(words.map(w=>your.test(w)?w.replace(/^ⲛⲉⲛ/,''):w))]
+// fs.writeFileSync('./copticWords3.json', JSON.stringify(havePek,null,2))
